@@ -20,7 +20,7 @@ public class DashboardServlet extends HttpServlet {
         // Set content type
         response.setContentType("text/html");
 
-        // Read user data from the file
+        // Read user data from the files
         List<String> userDetails = readUserDetails();
 
         // Generate HTML response
