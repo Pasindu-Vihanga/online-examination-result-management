@@ -1,125 +1,118 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Smart OAS Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Examination & Result Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
         }
-        .card-box {
-            border-radius: 10px;
-            padding: 20px;
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('exam-bg.jpg') center/cover;
             color: white;
+            text-align: center;
+            padding: 100px 20px;
         }
-        .card-blue { background: #007bff; }
-        .card-green { background: #28a745; }
-        .card-red { background: #dc3545; }
-        .card-orange { background: #fd7e14; }
         .sidebar {
-            height: auto;
-            background: #fff;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            width: 200px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            margin-left: 220px;
             padding: 20px;
         }
     </style>
 </head>
 <body>
-
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-2 sidebar">
-            <h4>Smart OAS</h4>
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" href="dashboard.jsp">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="results.jsp">Result</a></li>
-                <li class="nav-item"><a class="nav-link" href="index.jsp">Main Menu</a></li>
-            </ul>
-        </div>
-
-<div class="col-md-10">
-            <h3 class="my-4">Dashboard</h3>
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <div class="card-box card-blue text-center">
-                        <h4>Tests Count</h4>
-                        <p>52 Total<br>41 Active Tests</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card-box card-green text-center">
-                        <h4>Questions Count</h4>
-                        <p>9 Total<br>11 Active Questions</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card-box card-red text-center">
-                        <h4>Users Count</h4>
-                        <p>39 Total<br>30 Active Users</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card-box card-orange text-center">
-                        <h4>User Groups</h4>
-                        <p>9 Total<br>1 Active Group</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-5">
-                <h5>Test Applications Statistics</h5>
-                <table class="table table-bordered">
-                    <thead class="table-light">
-                    <tr>
-                        <th>Test Name</th>
-                        <th>Category</th>
-                        <th>Subjects</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr><td>An Aptitude Test</td><td>APT</td><td>General Knowledge</td><td><button class="btn btn-sm btn-primary">Status</button></td></tr>
-                    <tr><td>Vocabulary Test</td><td>Vocabulary</td><td>English</td><td><button class="btn btn-sm btn-primary">Status</button></td></tr>
-                    <tr><td>Political Science</td><td>Politics</td><td>Civics</td><td><button class="btn btn-sm btn-primary">Status</button></td></tr>
-                    <tr><td>Mathematical Expressions</td><td>Expressions</td><td>Mathematics</td><td><button class="btn btn-sm btn-primary">Status</button></td></tr>
-                    <tr><td>Current Affairs</td><td>Latest News</td><td>General Knowledge</td><td><button class="btn btn-sm btn-primary">Status</button></td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="mt-5">
-                <h5><b>Member Information</b></h5>
-                <form action="dashboard" method="post" class="row g-3">
-                    <div class="col-md-6">
-                        <label>Name</label>
-                        <input type="text" name="name" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Password</label>
-                        <input type="password" name="password" class="form-control">
-                    </div>
-                    <div class="col-12">
-                        <label>Address</label>
-                        <input type="text" name="address" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Telephone</label>
-                        <input type="text" name="telephone" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Email</label>
-                        <input type="email" name="email" class="form-control">
-                    </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-success">Save Member</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Exam Portal</a>
+        <span class="navbar-text ms-auto">Logged in as: <strong>Username</strong></span>
     </div>
+</nav>
+
+<div class="sidebar">
+    <h4>Navigation</h4>
+    <a href="#">Home</a>
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#contact">Contact</a>
+    <h4 class="mt-4">Members</h4>
+    <ul>
+        <li>Member 1</li>
+        <li>Member 2</li>
+        <li>Member 3</li>
+    </ul>
 </div>
+
+<div class="content">
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to Online Examination & Result Management</h1>
+            <p>Secure, Efficient, and Reliable Examination System</p>
+            <a href="login.jsp" class="btn btn-primary">Login</a>
+        </div>
+    </section>
+
+    <section id="features" class="container py-5">
+        <div class="row">
+            <!-- Bootstrap Card Example -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Update Member Details
+                    </div>
+                    <div class="card-body">
+                        <form action="dashboard" method="POST">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" name="address">
+                            </div>
+                            <div class="mb-3">
+                                <label for="telephone" class="form-label">Telephone Number</label>
+                                <input type="text" class="form-control" id="telephone" name="telephone">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Details</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2025 Online Exam Portal. All Rights Reserved.</p>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
