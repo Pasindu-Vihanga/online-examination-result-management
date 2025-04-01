@@ -73,7 +73,7 @@
 
     <section id="features" class="container py-5">
         <div class="row">
-            <!-- Bootstrap Card Example -->
+            <!-- Existing Card: Update Member Details -->
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
@@ -102,6 +102,23 @@
                                 <input type="text" class="form-control" id="telephone" name="telephone">
                             </div>
                             <button type="submit" class="btn btn-primary">Update Details</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Card: Photo Upload -->
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="example.jpg" class="card-img-top" alt="Photo">
+                    <div class="card-body">
+                        <h5 class="card-title">Upload a Photo</h5>
+                        <form>
+                            <div class="form-group">
+                                <label for="fileInput">Choose file</label>
+                                <input type="file" class="form-control-file" id="fileInput" accept=".jpg, .png">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
                         </form>
                     </div>
                 </div>
