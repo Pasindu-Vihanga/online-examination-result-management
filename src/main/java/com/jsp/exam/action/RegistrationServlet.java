@@ -40,10 +40,22 @@ public class RegistrationServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        // Response to user
+        // Bootstrap-styled response
+        out.println("<!DOCTYPE html>");
+        out.println("<html lang='en'>");
+        out.println("<head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+        out.println("<title>Registration response</title>");
+        out.println("<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<div class='container mt-5'>");
         out.println("<html><body>");
+        out.println("<div class='alert alert-success text-center'>");
         out.println("<h3>Registration successful!</h3>");
-        out.println("<a href='login.jsp'>Go to Login</a>");
+        out.println("<a href='login.jsp' class='btn btn-primary'>Back to Login</a>");
+        out.println("</div>");
         out.println("</body></html>");
     }
 }

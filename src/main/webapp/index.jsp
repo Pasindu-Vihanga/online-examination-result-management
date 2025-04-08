@@ -51,7 +51,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="manage.jsp">Member's Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
@@ -62,8 +62,8 @@
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
-        <h1>Welcome to Online Examination & Result Management</h1>
-        <p>Your platform for secure, efficient, and reliable examinations</p>
+        <h1 style="color: seagreen;">Welcome to Online Examination & Result Management</h1>
+        <p style="color: gray;">Your platform for secure, efficient, and reliable examinations</p>
         <a href="login.jsp" class="btn btn-warning btn-lg">Login Now</a>
     </div>
 </section>

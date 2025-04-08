@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] credentials = line.split(",");
-                // Use the specified condition to validate username and password
+                // Validate username and password
                 if (credentials.length >= 4 && credentials[1].equals(username) && credentials[2].equals(password)) {
                     isAuthenticated = true;
                     role = credentials[0]; // Extract role if authentication is successful
@@ -41,20 +41,39 @@ public class LoginServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        // Response to user
-        out.println("<html><body>");
+        // Bootstrap-styled response
+        out.println("<!DOCTYPE html>");
+        out.println("<html lang='en'>");
+        out.println("<head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+        out.println("<title>Login Response</title>");
+        out.println("<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<div class='container mt-5'>");
+
         if (isAuthenticated) {
+            out.println("<div class='alert alert-success text-center'>");
             out.println("<h3>Login successful!</h3>");
-            out.println("<p>Welcome, " + username + " (" + role + ")</p>");
+            out.println("<p>Welcome, <strong>" + username + "</strong> (" + role + ")</p>");
             if ("student".equalsIgnoreCase(role)) {
-                out.println("<a href='dashboard.jsp'>Go to Student Dashboard</a>");
+                out.println("<a href='dashboard.jsp' class='btn btn-primary'>Go to Student Dashboard</a>");
             } else if ("member".equalsIgnoreCase(role)) {
-                out.println("<a href='member.jsp'>Go to Member Page</a>");
+                out.println("<a href='member.jsp' class='btn btn-primary'>Go to Member Page</a>");
             }
+            out.println("</div>");
         } else {
-            out.println("<h3>Invalid username or password. Please try again.</h3>");
-            out.println("<a href='login.jsp'>Back to Login</a>");
+            out.println("<div class='alert alert-danger text-center'>");
+            out.println("<h3>Credentials not found. Please register!</h3>");
+            out.println("<a href='registration.jsp' class='btn btn-warning'>Register Here</a>");
+            out.println("<a href='login.jsp' class='btn btn-secondary'>Back to Login</a>");
+            out.println("</div>");
         }
-        out.println("</body></html>");
+
+        out.println("</div>");
+        out.println("<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'></script>");
+        out.println("</body>");
+        out.println("</html>");
     }
 }
