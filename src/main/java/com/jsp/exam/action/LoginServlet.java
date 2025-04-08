@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
         String role = null; // To store the user role if authentication is successful
 
         // Verify credentials from the stored data file
-        try (BufferedReader reader = new BufferedReader(new FileReader("D:/IP/proj/Exam/src/main/webapp/logincreds/credentials.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/credentials.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] credentials = line.split(",");
