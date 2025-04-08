@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Examination & Result Management</title>
+    <title>Admin Login Portal - Online Examination & Result Management</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -12,7 +12,7 @@
             background-color: #f9f9f9;
         }
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('exam-bg.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/pictures/welcome.png') center/cover no-repeat;
             color: white;
             text-align: center;
             padding: 120px 20px;
@@ -56,21 +56,10 @@
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
-        <h1>Admin login portal</h1>
+        <h1>Admin Login Portal</h1>
         <a href="memberslogin.jsp" class="btn btn-warning btn-lg">Login Now</a>
     </div>
 </section>
-
-<style>
-    .hero {
-        /* Background image and styling */
-        background: url('/pictures/welcome.png') center/cover no-repeat;
-        color: white;
-        text-align: center;
-        padding: 120px 20px;
-        height: auto; /* Adjust height based on your content */
-    }
-</style>
 
 <!-- Login Section -->
 <section id="login" class="container py-5">
@@ -79,16 +68,17 @@
         <form action="memberslogin" method="post">
             <div class="mb-3">
                 <label for="user" class="form-label">User Name</label>
-                <input type="text" class="form-control" id="user" placeholder="Enter your name" required>
+                <input type="text" class="form-control" id="user" name="username" placeholder="Enter your name" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
     </div>
 </section>
+
 <!-- Footer -->
 <footer class="text-center">
     <p>&copy; 2025 Online Exam Portal | All Rights Reserved</p>
