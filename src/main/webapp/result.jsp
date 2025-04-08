@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Examination & Result Management</title>
+    <title>Check Results by Index Number</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -14,6 +14,14 @@
             color: white;
             text-align: center;
             padding: 100px 20px;
+        }
+        .result-form {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f8f9fa;
         }
     </style>
 </head>
@@ -37,27 +45,19 @@
 
 <section class="hero">
     <div class="container">
-        <h1>Welcome to Online Examination & Result Management</h1>
-        <p>Secure, Efficient, and Reliable Examination System</p>
-        <a href="login.jsp" class="btn btn-primary">Login</a>
+        <h1>Check Your Result</h1>
+        <p>Enter your Index Number to view your examination result</p>
     </div>
 </section>
 
-<section id="features" class="container py-5">
-    <div class="row">
-        <div class="col-md-4">
-            <h3>Online Exams</h3>
-            <p>Conduct online exams securely with real-time monitoring.</p>
+<section class="container result-form">
+    <form action="result" method="get">
+        <div class="mb-3">
+            <label for="indexNumber" class="form-label">Index Number</label>
+            <input type="text" class="form-control" id="indexNumber" name="indexNumber" required placeholder="Enter your index number">
         </div>
-        <div class="col-md-4">
-            <h3>Instant Results</h3>
-            <p>Get automated and instant results right after the test.</p>
-        </div>
-        <div class="col-md-4">
-            <h3>Student Management</h3>
-            <p>Manage students, track performance, and generate reports.</p>
-        </div>
-    </div>
+        <button type="submit" class="btn btn-primary w-100">View Result</button>
+    </form>
 </section>
 
 <footer class="bg-dark text-white text-center py-3">
