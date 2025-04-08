@@ -51,7 +51,7 @@
 </section>
 
 <section class="container result-form">
-    <form action="result" method="get">
+    <form action="resultS" method="get">
         <div class="mb-3">
             <label for="indexNumber" class="form-label">Index Number</label>
             <input type="text" class="form-control" id="indexNumber" name="indexNumber" required placeholder="Enter your index number">

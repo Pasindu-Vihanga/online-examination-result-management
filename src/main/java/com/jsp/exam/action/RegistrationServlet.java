@@ -34,7 +34,7 @@ public class RegistrationServlet extends HttpServlet {
         }
 
         // Save data to a text file
-        try (FileWriter writer = new FileWriter("D:/IP/proj/Exam/src/main/webapp/logincreds/credentials.txt", true)) {
+        try (FileWriter writer = new FileWriter("D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/credentials.txt", true)) {
             writer.write(role + "," + username + "," + password + "," + email + "\n");
         } catch (IOException e) {
             e.printStackTrace();

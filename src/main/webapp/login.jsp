@@ -67,7 +67,7 @@
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
         <div class="text-center mt-3">
-            <p>Not registered? <a href="register.html" class="btn btn-outline-secondary">Register Here</a></p>
+            <p>Not registered? <a href="registration.jsp" class="btn btn-outline-secondary">Register Here</a></p>
         </div>
     </div>
 </section>
