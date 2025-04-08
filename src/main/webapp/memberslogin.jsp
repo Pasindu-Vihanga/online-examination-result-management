@@ -40,7 +40,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-        <a class="navbar-brand" href="#">Exam Portal</a>
+        <a class="navbar-brand" href="#">Exam Portal(Critical Accesses only!!!)</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -53,18 +53,10 @@
     </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="hero">
-    <div class="container">
-        <h1>Admin Login Portal</h1>
-        <a href="memberslogin.jsp" class="btn btn-warning btn-lg">Login Now</a>
-    </div>
-</section>
-
 <!-- Login Section -->
 <section id="login" class="container py-5">
     <div class="login-container">
-        <h2 class="text-center mb-4">Login Portal</h2>
+        <h2 class="text-center mb-4">Admin Login</h2>
         <form action="memberslogin" method="post">
             <div class="mb-3">
                 <label for="user" class="form-label">User Name</label>

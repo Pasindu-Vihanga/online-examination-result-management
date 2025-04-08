@@ -30,8 +30,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="#members">Manage Members</a></li>
-                <li class="nav-item"><a class="nav-link" href="#actions">Admin Actions</a></li>
                 <li class="nav-item"><a class="nav-link text-danger" href="index.jsp">Logout</a></li>
             </ul>
         </div>
@@ -48,35 +46,39 @@
 <section id="members" class="container py-5">
     <h2 class="text-center">Manage Members</h2>
     <div class="row">
+        <!-- Add New Member Section -->
         <div class="col-md-6">
             <div class="card actions-card">
                 <div class="card-header bg-primary text-white">Add New Member</div>
                 <div class="card-body">
-                    <form action="adminManagement" method="post" >
+                    <form action="manage" method="post">
+                        <!-- Hidden input for add action -->
+                        <input type="hidden" name="action" value="addMember">
                         <div class="mb-3">
                             <label for="memberName" class="form-label">Member Name:</label>
                             <input type="text" class="form-control" id="memberName" name="memberName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="role" class="form-label">Role:</label>
-                            <select class="form-control" id="role" name="role">
-                                <option value="admin">Admin</option>
-                                <option value="member">Member</option>
-                            </select>
+                            <label for="memberPassword" class="form-label">Member Password:</label>
+                            <input type="password" class="form-control" id="memberPassword" name="memberPassword" placeholder="Enter your password" required>
                         </div>
                         <button type="submit" class="btn btn-success">Add Member</button>
                     </form>
                 </div>
             </div>
         </div>
+
+        <!-- Remove Member Section -->
         <div class="col-md-6">
             <div class="card actions-card">
                 <div class="card-header bg-danger text-white">Remove Member</div>
                 <div class="card-body">
-                    <form method="post" action="removeMemberServlet">
+                    <form action="manage" method="post">
+                        <!-- Hidden input for remove action -->
+                        <input type="hidden" name="action" value="removeMember">
                         <div class="mb-3">
-                            <label for="memberId" class="form-label">Member ID:</label>
-                            <input type="text" class="form-control" id="memberId" name="memberId" required>
+                            <label for="memberName" class="form-label">Member Name:</label>
+                            <input type="text" class="form-control" id="memberName" name="memberName" required>
                         </div>
                         <button type="submit" class="btn btn-danger">Remove Member</button>
                     </form>
