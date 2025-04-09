@@ -55,8 +55,8 @@
                         <!-- Hidden input for add action -->
                         <input type="hidden" name="action" value="addMember">
                         <div class="mb-3">
-                            <label for="memberName" class="form-label">Member Name:</label>
-                            <input type="text" class="form-control" id="memberName" name="memberName" required>
+                            <label for="AddmemberName" class="form-label">Member Name:</label>
+                            <input type="text" class="form-control" id="AddmemberName" name="memberName" required>
                         </div>
                         <div class="mb-3">
                             <label for="memberPassword" class="form-label">Member Password:</label>
@@ -77,8 +77,8 @@
                         <!-- Hidden input for remove action -->
                         <input type="hidden" name="action" value="removeMember">
                         <div class="mb-3">
-                            <label for="memberName" class="form-label">Member Name:</label>
-                            <input type="text" class="form-control" id="memberName" name="memberName" required>
+                            <label for="RemmemberName" class="form-label">Member Name:</label>
+                            <input type="text" class="form-control" id="RemmemberName" name="memberName" required>
                         </div>
                         <button type="submit" class="btn btn-danger">Remove Member</button>
                     </form>
