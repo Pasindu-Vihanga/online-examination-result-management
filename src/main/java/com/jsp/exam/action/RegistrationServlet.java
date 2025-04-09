@@ -13,29 +13,42 @@ import java.io.PrintWriter;
 @WebServlet("/register")
 public class RegistrationServlet extends HttpServlet {
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
         // Get user input
-        String role = request.getParameter("role"); // Fetch the 'role' value
         String username = request.getParameter("name"); // Fetch the 'name' value
         String password = request.getParameter("password"); // Fetch the 'password' value
         String email = request.getParameter("email"); // Fetch the 'email' value
 
-        // Validate inputs (optional)
-        if (role == null || username == null || password == null || email == null ||
-                role.isEmpty() || username.isEmpty() || password.isEmpty() || email.isEmpty()) {
-            out.println("<html><body>");
+        // Validate inputs
+        if (username == null || password == null || email == null ||
+                username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html lang='en'>");
+            out.println("<head>");
+            out.println("<meta charset='UTF-8'>");
+            out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+            out.println("<title>Error</title>");
+            out.println("<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<div class='container mt-5'>");
+            out.println("<div class='alert alert-danger text-center'>");
             out.println("<h3>Error: All fields are required!</h3>");
-            out.println("<a href='registration.jsp'>Back to Registration</a>");
-            out.println("</body></html>");
+            out.println("<a href='registration.jsp' class='btn btn-secondary'>Back to Registration</a>");
+            out.println("</div>");
+            out.println("</div>");
+            out.println("</body>");
+            out.println("</html>");
             return;
         }
 
         // Save data to a text file
         try (FileWriter writer = new FileWriter("D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/credentials.txt", true)) {
-            writer.write(role + "," + username + "," + password + "," + email + "\n");
+            writer.write(username + "," + password + "," + email + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,16 +59,18 @@ public class RegistrationServlet extends HttpServlet {
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
         out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-        out.println("<title>Registration response</title>");
+        out.println("<title>Registration Response</title>");
         out.println("<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>");
         out.println("</head>");
         out.println("<body>");
         out.println("<div class='container mt-5'>");
-        out.println("<html><body>");
         out.println("<div class='alert alert-success text-center'>");
-        out.println("<h3>Registration successful!</h3>");
+        out.println("<h3>Registration Successful!</h3>");
         out.println("<a href='login.jsp' class='btn btn-primary'>Back to Login</a>");
         out.println("</div>");
-        out.println("</body></html>");
+        out.println("</div>");
+        out.println("<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'></script>");
+        out.println("</body>");
+        out.println("</html>");
     }
 }

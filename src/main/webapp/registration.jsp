@@ -44,23 +44,16 @@
 
         <form action="register" method="post">
             <div class="mb-3">
-                <label for="role" class="form-label">Select Role</label>
-                <select class="form-select" id="role" name="role">
-                    <option value="student">Student</option>
-                    <option value="member">Member</option>
-                </select>
-            </div>
-            <div class="mb-3">
                 <label for="name" class="form-label">Enter Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Create Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Create a password">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required>
             </div>
             <button type="submit" class="btn btn-success w-100">Register</button>
         </form>

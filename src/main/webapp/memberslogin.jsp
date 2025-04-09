@@ -59,12 +59,12 @@
         <h2 class="text-center mb-4">Admin Login</h2>
         <form action="memberslogin" method="post">
             <div class="mb-3">
-                <label for="user" class="form-label">User Name</label>
-                <input type="text" class="form-control" id="user" name="username" placeholder="Enter your name" required>
+                <label for="memuser" class="form-label">User Name</label>
+                <input type="text" class="form-control" id="memuser" name="username" placeholder="Enter your name" required>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                <label for="mempassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="mempassword" name="password" placeholder="Enter your password" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
