@@ -19,6 +19,29 @@
             text-align: center;
             padding: 100px 20px;
         }
+        .sidebar {
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            background-color: #343a40;
+            padding-top: 20px;
+            color: white;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .content {
+            margin-left: 270px; /* Align content to account for the sidebar */
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -30,6 +53,14 @@
         </span>
     </div>
 </nav>
+
+<div class="sidebar">
+    <h5 class="text-center">Navigation</h5>
+    <a href="dashboard.jsp">Dashboard</a>
+    <a href="results.jsp">View Results</a>
+    <a href="exam.jsp">Exams</a>
+    <a href="login.jsp">Logout</a>
+</div>
 
 <div class="content">
     <section class="hero">

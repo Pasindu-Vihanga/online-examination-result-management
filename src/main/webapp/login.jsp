@@ -36,9 +36,13 @@
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required placeholder="••••••••" />
+                <input type="password" id="password" name="password" class="form-control" required placeholder="Enter your password" />
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <a href="index.jsp" class="btn btn-secondary w-100">Back to Main</a>
+            </div>
+
         </form>
         <div class="text-center mt-3">
             <p>Not registered? <a href="registration.jsp" class="btn btn-outline-secondary">Register Here</a></p>

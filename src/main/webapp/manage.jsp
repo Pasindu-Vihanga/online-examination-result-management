@@ -43,16 +43,15 @@
     </div>
 </section>
 
-<section id="members" class="container py-5">
-    <h2 class="text-center">Manage Members</h2>
+<section id="management" class="container py-5">
+    <h2 class="text-center">Management Portal</h2>
     <div class="row">
-        <!-- Add New Member Section -->
+        <!-- Add Member Section -->
         <div class="col-md-6">
             <div class="card actions-card">
                 <div class="card-header bg-primary text-white">Add New Member</div>
                 <div class="card-body">
                     <form action="manage" method="post">
-                        <!-- Hidden input for add action -->
                         <input type="hidden" name="action" value="addMember">
                         <div class="mb-3">
                             <label for="AddmemberName" class="form-label">Member Name:</label>
@@ -60,7 +59,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="memberPassword" class="form-label">Member Password:</label>
-                            <input type="password" class="form-control" id="memberPassword" name="memberPassword" placeholder="Enter your password" required>
+                            <input type="password" class="form-control" id="memberPassword" name="memberPassword" required>
                         </div>
                         <button type="submit" class="btn btn-success">Add Member</button>
                     </form>
@@ -74,13 +73,33 @@
                 <div class="card-header bg-danger text-white">Remove Member</div>
                 <div class="card-body">
                     <form action="manage" method="post">
-                        <!-- Hidden input for remove action -->
-                        <input type="hidden" name="action" value="removeMember">
+                        <input type="hidden" name="action" value="remove">
+                        <input type="hidden" name="type" value="member">
                         <div class="mb-3">
                             <label for="RemmemberName" class="form-label">Member Name:</label>
-                            <input type="text" class="form-control" id="RemmemberName" name="memberName" required>
+                            <input type="text" class="form-control" id="RemmemberName" name="name" required>
                         </div>
                         <button type="submit" class="btn btn-danger">Remove Member</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Remove Student Section -->
+        <div class="col-md-6">
+            <div class="card actions-card">
+                <div class="card-header bg-danger text-white">Remove Student</div>
+                <div class="card-body">
+                    <form action="manage" method="post">
+                        <input type="hidden" name="action" value="remove">
+                        <input type="hidden" name="type" value="student">
+                        <div class="mb-3">
+                            <label for="studentremoval" class="form-label">Student Name:</label>
+                            <input type="text" class="form-control" id="studentremoval" name="name" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Remove Student</button>
                     </form>
                 </div>
             </div>
@@ -109,9 +128,9 @@
         </div>
         <div class="col-md-4">
             <div class="card actions-card">
-                <div class="card-header bg-warning text-white">Settings</div>
+                <div class="card-header bg-warning text-white">Manage Students</div>
                 <div class="card-body">
-                    <a href="settings.jsp" class="btn btn-warning">Update Settings</a>
+                    <a href="settings.jsp" class="btn btn-warning">Students</a>
                 </div>
             </div>
         </div>
