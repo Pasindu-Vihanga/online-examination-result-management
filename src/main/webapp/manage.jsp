@@ -114,7 +114,7 @@
             <div class="card actions-card">
                 <div class="card-header bg-info text-white">View Reports</div>
                 <div class="card-body">
-                    <a href="viewReports.jsp" class="btn btn-info">Go to Reports</a>
+                    <a href="studentsort.jsp" class="btn btn-info">Go to Reports</a>
                 </div>
             </div>
         </div>

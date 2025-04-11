@@ -17,10 +17,10 @@
     if (!file.exists()) {
         out.println("<p>File not found!</p>");
     } else {
-        // List to hold the user data
-        List<String> usersList = new ArrayList<>();
+        // LinkedList to hold the user data
+        LinkedList<String> usersList = new LinkedList<>();
 
-        // Read the file and store each line
+        // Read the file and store each line into the LinkedList
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
