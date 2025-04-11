@@ -4,45 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Examination & Result Management</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f9f9f9;
+            background-color: #00bcd4;
+            color: #fff;
         }
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('exam-bg.jpg') center/cover;
-            color: white;
-            text-align: center;
-            padding: 120px 20px;
+        .navbar {
+            background-color: #00bcd4;
+            padding: 1rem;
         }
         .navbar-brand {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
+            color: #fff;
+        }
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffc107;
+        }
+        .hero {
+            background-color: #00bcd4;
+            padding: 100px 20px;
+            text-align: left;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        .hero p {
+            font-size: 1rem;
+            max-width: 700px;
+            color: #e0f7fa;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            color: #000;
+            font-weight: bold;
+        }
+        .btn-warning:hover {
+            background-color: #ffca28;
+            color: #000;
         }
         .section-title {
             margin: 30px 0;
             text-align: center;
-            color: #333;
+            color: #37474f;
+            font-weight: bold;
         }
         .feature-card {
             transition: transform 0.3s ease-in-out;
+            background-color: #f1f8e9;
+            border: none;
         }
         .feature-card:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         footer {
-            background-color: #343a40;
+            background-color: #004d40;
             color: white;
-            padding: 15px 0;
+            padding: 20px 0;
         }
     </style>
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="#">Exam Portal</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -51,73 +84,59 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="memberslogin.jsp">Member's Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="memberslogin.jsp">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero">
     <div class="container">
-        <h1 style="color: seagreen;">Welcome to Online Examination & Result Management</h1>
-        <p style="color: gray;">Your platform for secure, efficient, and reliable examinations</p>
-        <a href="login.jsp" class="btn btn-warning btn-lg">Login Now</a>
+        <h1>Welcome to Online Examination & Result Management</h1>
+        <center><p>Secure, efficient, and reliable examinations</p></center>
+        <center><a href="login.jsp" class="btn btn-warning btn-lg">Student Login</a></center>
     </div>
 </section>
 
-<style>
-    .hero {
-        /* Background image and styling */
-        background: url('/pictures/exam.png') center/cover no-repeat;
-        color: white;
-        text-align: center;
-        padding: 120px 20px;
-        height: auto; /* Adjust height based on your content */
-    }
-</style>
-<!-- Features Section -->
 <section id="features" class="container py-5">
     <h2 class="section-title">Features</h2>
     <div class="row">
         <div class="col-md-4">
-            <div class="card feature-card">
+            <div class="card feature-card" style="background-color: #D3D3D3; color: #212121; border: 2px solid #fbc02d;">
                 <div class="card-body text-center">
                     <h3 class="card-title">Online Exams</h3>
-                    <p class="card-text">Conduct online exams securely with real-time monitoring.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
+                    <p class="card-text">Conduct exams securely with real-time monitoring.</p>
+                    <a href="#" class="btn btn-dark">Learn More</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card feature-card">
-                <div class="card-body text-center">
+                <div class="card-body text-center" style="background-color: #D3D3D3; color: #212121; border: 2px solid #fbc02d;">
                     <h3 class="card-title">Instant Results</h3>
-                    <p class="card-text">Get automated and instant results right after the test.</p>
-                    <a href="#" class="btn btn-success">Learn More</a>
+                    <p class="card-text">Automated and instant results right after tests.</p>
+                    <a href="#" class="btn btn-dark">Learn More</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card feature-card">
-                <div class="card-body text-center">
-                    <h3 class="card-title">Student Management</h3>
-                    <p class="card-text">Manage students, track performance, and generate reports.</p>
-                    <a href="#" class="btn btn-info">Learn More</a>
+                <div class="card-body text-center" style="background-color: #D3D3D3; color: #212121; border: 2px solid #fbc02d;">
+                    <h3 class="card-title">Management</h3>
+                    <p class="card-text">Handle all students and administrations sections.</p>
+                    <a href="#" class="btn btn-dark">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Footer -->
 <footer class="text-center">
     <p>&copy; 2025 Online Exam Portal | All Rights Reserved</p>
 </footer>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

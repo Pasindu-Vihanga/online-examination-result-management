@@ -130,7 +130,7 @@
             <div class="card actions-card">
                 <div class="card-header bg-warning text-white">Manage Students</div>
                 <div class="card-body">
-                    <a href="studentmanage.jsp" class="btn btn-warning">Students</a>
+                    <a href="viewstudents.jsp" class="btn btn-warning">Students</a>
                 </div>
             </div>
         </div>
