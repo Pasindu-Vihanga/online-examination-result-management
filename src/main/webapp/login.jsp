@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: #f0f2f5;
+            /* Modify background here */
+            background: linear-gradient(120deg, #00bcd4, #ffc107); /* Example: Gradient background */
         }
         .login-card {
             max-width: 420px;
@@ -28,7 +28,7 @@
 <body>
 <div class="container">
     <div class="card login-card p-4">
-        <h3 class="text-center login-header mb-4">🔐 User Login</h3>
+        <h3 class="text-center login-header mb-4">Login Portal</h3>
         <form method="POST" action="login">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
