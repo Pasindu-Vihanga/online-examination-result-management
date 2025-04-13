@@ -114,7 +114,7 @@
             <div class="card actions-card">
                 <div class="card-header bg-info text-white">View Reports</div>
                 <div class="card-body">
-                    <a href="studentsort.jsp" class="btn btn-info">Go to Reports</a>
+                    <a href="viewReports.jsp" class="btn btn-info">Go to Reports</a>
                 </div>
             </div>
         </div>
@@ -130,7 +130,7 @@
             <div class="card actions-card">
                 <div class="card-header bg-warning text-white">Manage Students</div>
                 <div class="card-body">
-                    <a href="viewstudents.jsp" class="btn btn-warning">Students</a>
+                    <a href="studentmanage.jsp" class="btn btn-warning">Students</a>
                 </div>
             </div>
         </div>
