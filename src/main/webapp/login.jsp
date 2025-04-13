@@ -13,7 +13,7 @@
         .login-card {
             max-width: 420px;
             margin: 60px auto;
-            border-radius: 16px;
+            border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
         .login-header {
