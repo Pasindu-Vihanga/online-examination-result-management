@@ -15,7 +15,7 @@
             <h2>Submit Your Feedback</h2>
         </div>
         <div class="card-body">
-            <form action="FeedbackServlet" method="post">
+            <form action="feedback" method="post">
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input type="text" name="name" class="form-control" required>
