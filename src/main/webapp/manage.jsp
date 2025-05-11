@@ -1,9 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Management Page</title>
+    <title>Admin Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -21,6 +22,7 @@
     </style>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">Admin Panel</a>
@@ -29,8 +31,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link text-danger" href="index.jsp">Logout</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="admindashboard.jsp">Dashboard</a></li>
             </ul>
         </div>
     </div>
@@ -39,98 +40,62 @@
 <section class="hero">
     <div class="container">
         <h1>Welcome Admin</h1>
-        <p>Manage members, oversee exams, and perform administrative actions efficiently.</p>
+        <p>Manage administrator accounts below.</p>
     </div>
 </section>
 
-<section id="management" class="container py-5">
-    <h2 class="text-center">Management Portal</h2>
+<section class="container py-5">
+    <h2 class="text-center">Admin Management</h2>
     <div class="row">
-        <!-- Add Member Section -->
+        <!-- Create Admin -->
         <div class="col-md-6">
             <div class="card actions-card">
-                <div class="card-header bg-primary text-white">Add New Member</div>
+                <div class="card-header bg-success text-white">Update Admin</div>
                 <div class="card-body">
                     <form action="manage" method="post">
-                        <input type="hidden" name="action" value="addMember">
+                        <input type="hidden" name="action" value="update">
                         <div class="mb-3">
-                            <label for="AddmemberName" class="form-label">Member Name:</label>
-                            <input type="text" class="form-control" id="AddmemberName" name="memberName" required>
+                            <label for="adminUsername" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="adminUsername" name="username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="memberPassword" class="form-label">Member Password:</label>
-                            <input type="password" class="form-control" id="memberPassword" name="memberPassword" required>
+                            <label for="adminPassword" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="adminPassword" name="password" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Add Member</button>
+                        <button type="submit" class="btn btn-success">Update Admin</button>
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- Remove Member Section -->
+        <!-- Update Admin -->
         <div class="col-md-6">
             <div class="card actions-card">
-                <div class="card-header bg-danger text-white">Remove Member</div>
+                <div class="card-header bg-danger text-white">Delete Admin</div>
                 <div class="card-body">
                     <form action="manage" method="post">
-                        <input type="hidden" name="action" value="remove">
-                        <input type="hidden" name="type" value="member">
+                        <input type="hidden" name="action" value="delete">
                         <div class="mb-3">
-                            <label for="RemmemberName" class="form-label">Member Name:</label>
-                            <input type="text" class="form-control" id="RemmemberName" name="name" required>
+                            <label for="deleteAdminUsername" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="deleteAdminUsername" name="username" required>
                         </div>
-                        <button type="submit" class="btn btn-danger">Remove Member</button>
+                        <button type="submit" class="btn btn-danger">Delete Admin</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- View Admin List -->
     <div class="row mt-4">
-        <!-- Remove Student Section -->
-        <div class="col-md-6">
+        <div class="col-md-6 mx-auto">
             <div class="card actions-card">
-                <div class="card-header bg-danger text-white">Remove Student</div>
+                <div class="card-header bg-info text-white text-center">View Admins</div>
                 <div class="card-body">
                     <form action="manage" method="post">
-                        <input type="hidden" name="action" value="remove">
-                        <input type="hidden" name="type" value="student">
-                        <div class="mb-3">
-                            <label for="studentremoval" class="form-label">Student Name:</label>
-                            <input type="text" class="form-control" id="studentremoval" name="name" required>
-                        </div>
-                        <button type="submit" class="btn btn-danger">Remove Student</button>
+                        <input type="hidden" name="action" value="read">
+                        <button type="submit" class="btn btn-info w-100">Show Admin List</button>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="actions" class="container py-5">
-    <h2 class="text-center">Admin Actions</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card actions-card">
-                <div class="card-header bg-info text-white">View Reports</div>
-                <div class="card-body">
-                    <a href="studentsort.jsp" class="btn btn-info">Go to Reports</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card actions-card">
-                <div class="card-header bg-secondary text-white">Approve Exams</div>
-                <div class="card-body">
-                    <a href="approveExams.jsp" class="btn btn-secondary">Approve Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card actions-card">
-                <div class="card-header bg-warning text-white">Manage Students</div>
-                <div class="card-body">
-                    <a href="viewstudents.jsp" class="btn btn-warning">Students</a>
                 </div>
             </div>
         </div>

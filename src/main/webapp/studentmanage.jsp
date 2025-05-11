@@ -14,6 +14,27 @@
 <body class="container mt-4">
 <h2 class="text-center mb-4">Student Management</h2>
 
+<!-- Add Student Form -->
+<div class="card p-4 shadow mb-4">
+    <h4>Add New Student</h4>
+    <form id="addStudentForm">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Add Student</button>
+    </form>
+</div>
+
+<!-- Student List Table -->
 <table class="table table-striped">
     <thead class="table-dark">
     <tr>
@@ -42,6 +63,22 @@
 
 <script>
     $(document).ready(function() {
+        // Handle Add Student Form Submission
+        $("#addStudentForm").submit(function(event) {
+            event.preventDefault();
+
+            $.post("student", {
+                action: "add",
+                username: $("#username").val(),
+                password: $("#password").val(),
+                email: $("#email").val()
+            }, function(response) {
+                alert(response);
+                location.reload();
+            });
+        });
+
+        // Handle Delete Student Action
         $(".delete-btn").click(function() {
             var username = $(this).data("username");
 
@@ -53,7 +90,8 @@
     });
 </script>
 
-<!-- Bootstrap JS (Optional) -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

@@ -1,5 +1,0 @@
-12345,John Doe,2005-05-10,UID001,Robert Doe,10,A,Math,35,4,5,45,89,Science,30,4,5,40,79,English,38,5,5,44,92,History,29,3,4,40,76,Civics,31,4,4,42,81,Computer,40,5,5,50,100,Art,36,4,5,45,90,10,A,640,700,91.4,3,Excellent
-45672,Diana,2005-05-17,UID001,Robert Doe,10,A,Math,35,4,5,45,89,Science,30,4,5,40,79,English,38,5,5,44,92,History,29,3,4,40,76,Civics,31,4,4,42,81,Computer,40,5,5,50,100,Art,36,4,5,45,90,10,A,640,700,91.4,3,Excellent
-12345,John Doe,2005-05-10,UID001,Robert Doe,10,A,Math,35,4,5,45,89,Science,30,4,5,40,79,English,38,5,5,44,92,History,29,3,4,40,76,Civics,31,4,4,42,81,Computer,40,5,5,50,100,Art,36,4,5,45,90,10,A,640,700,91.4,3,Excellent
-12345,John Doe,2005-05-10,UID001,Robert Doe,10,A,Math,35,4,5,45,89,Science,30,4,5,40,79,English,38,5,5,44,92,History,29,3,4,40,76,Civics,31,4,4,42,81,Computer,40,5,5,50,100,Art,36,4,5,45,90,10,A,640,700,91.4,3,Excellent
-12345,John Doe,2005-05-10,UID001,Robert Doe,10,A,Math,35,4,5,45,89,Science,30,4,5,40,79,English,38,5,5,44,92,History,29,3,4,40,76,Civics,31,4,4,42,81,Computer,40,5,5,50,100,Art,36,4,5,45,90,10,A,640,700,91.4,3,Excellent

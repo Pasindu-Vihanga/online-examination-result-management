@@ -1,39 +1,64 @@
 package com.jsp.exam.action;
 
-import java.io.*;
-import java.util.*;
+import com.jsp.exam.model.feedbackmodel;
+import com.jsp.exam.service.feedbackservice;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
-@WebServlet("/feedback")
+import java.io.IOException;
+
+@WebServlet("/feedbackS")
 public class FeedbackServlet extends HttpServlet {
-    private static final String FILE_PATH = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/feedback.txt"; // Change path as needed
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private final feedbackservice feedbackService = new feedbackservice();
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if ("delete".equalsIgnoreCase(action)) {
+            handleDelete(request, response);
+        } else {
+            handleCreate(request, response);
+        }
+    }
+
+    private void handleCreate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String message = request.getParameter("message");
+        String filename = request.getParameter("filename"); // Optional
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(name + "," + email + "," + message);
-            writer.newLine();
+        feedbackmodel feedback = new feedbackmodel(name, email, message, filename);
+
+        if (feedback.isValid()) {
+            feedbackService.createFeedback(feedback);
+            request.setAttribute("successMessage", "Your feedback has been submitted successfully!");
+        } else {
+            request.setAttribute("error", "Please fill in all required fields.");
         }
 
         response.sendRedirect("feedback.jsp");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+    private void handleDelete(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        String name = request.getParameter("name");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-                response.getWriter().println("<p>" + data[0] + " - " + data[2] + "</p>");
+        if (name != null && !name.trim().isEmpty()) {
+            boolean deleted = feedbackService.removeFeedback(name);
+            if (deleted) {
+                System.out.println("Feedback deleted for: " + name);
+            } else {
+                System.out.println("Failed to delete feedback for: " + name);
             }
         }
+
+        response.sendRedirect("feedback.jsp");
     }
 }

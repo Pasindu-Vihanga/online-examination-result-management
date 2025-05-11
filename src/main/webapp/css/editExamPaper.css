@@ -1,0 +1,20 @@
+.question-format {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.question-format .save-btn {
+    flex: 1 1 calc(10% - 10px); /* Responsive width for 10 buttons with spacing */
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #6c63ff;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
