@@ -21,6 +21,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>Exam</finalName>
+    <finalName>Online_Examinations_and_result_management_system</finalName>
   </build>
 </project>
