@@ -185,6 +185,7 @@
     </div>
     <ul class="sidebar-menu">
         <li class="active"><a href="dashboard.jsp">Dashboard</a></li>
+        <li class="active"><a href="examPortal.jsp">Attend to Exam</a></li>
         <li><a href="results.jsp">Result</a></li>
         <li><a href="index.jsp">Main Menu</a></li>
     </ul>
