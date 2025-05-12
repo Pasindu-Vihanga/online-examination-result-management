@@ -9,7 +9,7 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
-@WebServlet("/register")
+@WebServlet("/registerAD")
 public class AdminRegServlet extends HttpServlet {
     private final Adminservice adminservice = new Adminservice();
 

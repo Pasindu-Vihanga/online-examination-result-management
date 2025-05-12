@@ -110,7 +110,7 @@
 <body>
 <div class="register-container">
     <h3 class="mb-4">Create Account</h3>
-    <form action="register" method="post">
+    <form action="registerAD" method="post">
         <div class="form-group">
             <i class="bi bi-person-fill"></i>
             <input type="text" class="form-control" name="username" placeholder="User Name" required />
