@@ -6,7 +6,7 @@ import java.util.*;
 import com.jsp.exam.model.ExamPaper;
 
 public class Examservice {
-    private static final String DEFAULT_FILE_PATH = "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/Questions/questions.txt";
+    private static final String DEFAULT_FILE_PATH = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/questions.txt";
     private String filePath;
 
     public Examservice() {

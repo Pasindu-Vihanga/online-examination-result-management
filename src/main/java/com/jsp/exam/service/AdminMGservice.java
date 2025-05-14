@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminMGservice {
-    private static final String CREDENTIAL_FILE = "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/admin.txt";
+    private static final String CREDENTIAL_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/admin.txt";
 
     //Create Admin
     public boolean createAdmin(AdminLog adminLog) {

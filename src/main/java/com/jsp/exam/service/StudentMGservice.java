@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentMGservice {
-    private static final String STUDENT_CREDENTIAL_FILE = "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/credentials.txt";
+    private static final String STUDENT_CREDENTIAL_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/credentials.txt";
 
     // Create user
     public boolean addStudent(StudentLog studentLog) {
