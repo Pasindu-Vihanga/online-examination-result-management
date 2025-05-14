@@ -5,7 +5,7 @@ import com.jsp.exam.service.AdminLogger;
 import java.io.*;
 
 public class Adminservice implements AdminAuthService {
-    private static final String CREDENTIAL_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/admin.txt";
+    private static final String CREDENTIAL_FILE = "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/admin.txt";
 
     @Override
     public boolean authenticate(AdminLog adminLog) {

@@ -7,7 +7,7 @@ import java.util.List;
 import com.jsp.exam.model.Student;
 
 public class Studentservice { // Corrected class name (Capitalized 'S')
-    private static final String STUDENT_CRED_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/credentials.txt";
+    private static final String STUDENT_CRED_FILE = "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/credentials.txt";
 
     // Create student
     public boolean addStudent(Student student) {

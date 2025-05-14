@@ -6,7 +6,7 @@ import java.util.*;
 import com.jsp.exam.model.ExmpSession;
 
 public class Exmpservice {
-    private static final String DEFAULT_FILE_PATH = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/student_attempts.txt";
+    private static final String DEFAULT_FILE_PATH = "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/Questions/student_attempts.txt";
     private String filePath;
 
     public Exmpservice() {

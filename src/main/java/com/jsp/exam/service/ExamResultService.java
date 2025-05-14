@@ -6,8 +6,8 @@ import java.util.*;
 import com.jsp.exam.model.ExamAnswer;
 
 public class ExamResultService {
-    private static final String STUDENT_ANSWER_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/student_attempts.txt";
-    private static final String QUESTION_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/questions.txt";
+    private static final String STUDENT_ANSWER_FILE = "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/Questions/student_attempts.txt";
+    private static final String QUESTION_FILE = "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/Questions/questions.txt";
 
     public boolean storeAnswers(String studentId, String examCode, Map<String, String> answers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(STUDENT_ANSWER_FILE, true))) {

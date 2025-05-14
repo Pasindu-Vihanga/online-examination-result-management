@@ -39,7 +39,7 @@ public class AdminLoginServlet extends HttpServlet {
         inputUsername = inputUsername.trim();
         inputPassword = inputPassword.trim();
 
-        AdminLog adminLog = new AdminLog(inputUsername, inputPassword, "D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/admin.txt");
+        AdminLog adminLog = new AdminLog(inputUsername, inputPassword, "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/admin.txt");
         boolean isAuthenticated = adminService.authenticate(adminLog);
 
         response.setContentType("text/html");
