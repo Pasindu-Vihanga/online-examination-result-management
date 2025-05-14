@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import com.jsp.exam.model.Student;
 import com.jsp.exam.service.Studentservice;
 
-@WebServlet("/registerE")
+@WebServlet("/register")
 public class UserRegistrationServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
