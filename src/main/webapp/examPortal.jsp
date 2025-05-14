@@ -64,7 +64,7 @@
         session.setAttribute("examCode", examCode);
       }
 
-      String filePath = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/questions.txt";
+      String filePath = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/questions.txt";
       LinkedHashSet<String> examCodes = new LinkedHashSet<>();
 
       File file = new File(filePath);
