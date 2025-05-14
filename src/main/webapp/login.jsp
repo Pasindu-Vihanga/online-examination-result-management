@@ -46,7 +46,6 @@
         </form>
         <div class="text-center mt-3">
             <p>Not registered? <a href="registration.jsp" class="btn btn-outline-secondary">Register Here</a></p>
-            <p>Not registered? <a href="dashboard.jsp" class="btn btn-outline-secondary">Direct go</a></p>
         </div>
     </div>
 </div>

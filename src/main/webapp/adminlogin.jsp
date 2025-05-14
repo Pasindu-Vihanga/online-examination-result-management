@@ -131,7 +131,6 @@
                 <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
             <a href="adminreg.jsp" class="forgot-link">Forgot Password?</a>
-            <a href="Exmindex.jsp" class="forgot-link">Direct go</a>
         </div>
         <button type="submit" class="btn btn-login">LOGIN</button>
     </form>

@@ -106,7 +106,7 @@
 <section class="section-container">
     <ul class="list-group">
         <li class="list-group-item"><a href="manage.jsp">🔹 Admin Management - Add/Remove/View Admins</a></li>
-        <li class="list-group-item"><a href="studentsort.jsp">📊 Reports - Exam & User Reports</a></li>
+        <li class="list-group-item"><a href="Exmindex.jsp">📊 Exam Manage - Add/Remove/Edit Exams</a></li>
         <li class="list-group-item"><a href="studentmanage.jsp">🎓 Manage Students - Add/Remove/View Students</a></li>
     </ul>
 </section>
