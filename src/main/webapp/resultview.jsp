@@ -21,6 +21,12 @@
     <h2 class="text-center">Exam Results for <%= studentId %> - <%= examCode %></h2>
     <h4 class="text-center text-success">Final Score: <%= score %></h4>
 
+    <form action="ViewAnswersServlet" method="post">
+        <input type="hidden" name="studentId" value="<%= studentId %>">
+        <input type="hidden" name="examCode" value="<%= examCode %>">
+        <button type="submit" class="btn btn-primary d-block mx-auto">Save Result</button>
+    </form>
+
     <% if (!results.isEmpty()) { %>
     <table class="table table-bordered mt-3">
         <thead>

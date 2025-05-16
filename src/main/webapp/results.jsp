@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List, com.jsp.exam.service.ExamResultService" %>
+<%
+    ExamResultService examService = new ExamResultService();
+    List<String> examCodes = examService.getExamCodes();
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,8 +40,12 @@
             </div>
             <div class="mb-3">
                 <label for="examCode" class="form-label fw-bold">Exam Code</label>
-                <input type="text" class="form-control form-control-lg" id="examCode"
-                       name="examCode" required placeholder="e.g., DM1120">
+                <select class="form-select form-select-lg" id="examCode" name="examCode" required>
+                    <option value="" selected disabled>Choose an Exam Code</option>
+                    <% for (String code : examCodes) { %>
+                    <option value="<%= code %>"><%= code %></option>
+                    <% } %>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary btn-lg w-100 py-2">View Results</button>
         </form>
@@ -46,7 +55,7 @@
         <h3 class="text-center">Exam Results</h3>
         <div class="alert alert-info text-center" id="scoreDisplay"></div>
         <table class="table table-bordered mt-3">
-            <thead>
+            <thead class="table-dark">
             <tr>
                 <th>Question Number</th>
                 <th>Correct</th>

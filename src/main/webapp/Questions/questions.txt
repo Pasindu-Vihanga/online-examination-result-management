@@ -1,1 +1,2 @@
-MID EXAM|Faculty of Information Technology|IT1150|30|10|Who was the father of the computer?|Charles Babage|Donald Trump|Jack MA|Jeff BEzzoz|01|A
+MID EXAM|Faculty of Information Technology|IT1150|30|10|which type of network cable used to connect two computers?|HDMI|USB|RJ45|RJ11|01|C
+MID EXAM|Faculty of Information Technology|DM1120|30|10|Answer for 5 * 5 + 6 / 3|27|30|45|12|01|B
