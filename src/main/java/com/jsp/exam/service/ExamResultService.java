@@ -3,11 +3,10 @@ package com.jsp.exam.service;
 import java.io.*;
 import java.util.*;
 
-import com.jsp.exam.model.ExamAnswer;
-
 public class ExamResultService {
-    private static final String STUDENT_ANSWER_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/student_attempts.txt";
-    private static final String QUESTION_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/questions.txt";
+    private static final String STUDENT_ANSWER_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/student_attempts.txt";
+    private static final String QUESTION_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/questions.txt";
+    private static final String RESULT_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/marks.txt"; // File to store exam results
 
     public boolean storeAnswers(String studentId, String examCode, Map<String, String> answers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(STUDENT_ANSWER_FILE, true))) {
@@ -24,8 +23,8 @@ public class ExamResultService {
         }
     }
 
-    public Map<String, String> getCorrectAnswers(String examCode) {
-        Map<String, String> correctAnswers = new HashMap<>();
+    public List<String> getExamCodes() {
+        List<String> examCodes = new ArrayList<>();
         File file = new File(QUESTION_FILE);
 
         if (file.exists()) {
@@ -33,15 +32,15 @@ public class ExamResultService {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split("\\|");
-                    if (parts.length >= 12 && parts[2].equals(examCode)) {
-                        correctAnswers.put(parts[10], parts[11]); // QuestionNumber -> Correct Answer
+                    if (parts.length >= 3 && !examCodes.contains(parts[2])) {
+                        examCodes.add(parts[2]); // Ensures only unique exam codes are stored
                     }
                 }
             } catch (IOException e) {
-                System.err.println("[getCorrectAnswers] Error: " + e.getMessage());
+                System.err.println("[getExamCodes] Error: " + e.getMessage());
             }
         }
-        return correctAnswers;
+        return examCodes;
     }
 
     public Map<String, Boolean> evaluateStudentAnswers(String studentId, String examCode) {
@@ -73,15 +72,100 @@ public class ExamResultService {
         return resultMap;
     }
 
-    public int calculateScore(String studentId, String examCode) {
-        Map<String, Boolean> results = evaluateStudentAnswers(studentId, examCode);
-        int score = 0;
+    public Map<String, String> getCorrectAnswers(String examCode) {
+        Map<String, String> correctAnswers = new HashMap<>();
+        File file = new File(QUESTION_FILE);
 
-        for (boolean isCorrect : results.values()) {
-            if (isCorrect) {
-                score += 1; // Assuming each correct answer gives 1 point
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length >= 12 && parts[2].equals(examCode)) {
+                        correctAnswers.put(parts[10], parts[11]); // Mapping QuestionNumber -> Correct Answer
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("[getCorrectAnswers] Error: " + e.getMessage());
             }
         }
-        return score;
+        return correctAnswers;
+    }
+
+    public int calculateScore(String studentId, String examCode) {
+        Map<String, Boolean> results = evaluateStudentAnswers(studentId, examCode);
+        return (int) results.values().stream().filter(Boolean::booleanValue).count();
+    }
+
+    public boolean saveExamResult(String studentId, String examCode) {
+        int score = calculateScore(studentId, examCode);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RESULT_FILE, true))) {
+            writer.write(studentId + "|" + examCode + "|" + score);
+            writer.newLine();
+            return true;
+        } catch (IOException e) {
+            System.err.println("[saveExamResult] Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public List<String[]> getAllResults() {
+        List<String[]> results = new ArrayList<>();
+        File file = new File(RESULT_FILE);
+
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] data = line.split("\\|");
+                    if (data.length == 3) {
+                        results.add(data); // Ensure only valid records are stored
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("[getAllResults] Error: " + e.getMessage());
+            }
+        }
+        return results;
+    }
+
+    public boolean deleteResult(String studentId, String examCode) {
+        List<String[]> results = getAllResults();
+        boolean found = false;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RESULT_FILE))) {
+            for (String[] record : results) {
+                if (record.length == 3 && record[0].equals(studentId) && record[1].equals(examCode)) {
+                    found = true; // Mark as deleted
+                } else {
+                    writer.write(String.join("|", record));
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("[deleteResult] Error: " + e.getMessage());
+            return false;
+        }
+        return found;
+    }
+
+    public boolean updateResult(String studentId, String examCode, int newScore) {
+        List<String[]> results = getAllResults();
+        boolean found = false;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RESULT_FILE))) {
+            for (String[] record : results) {
+                if (record.length == 3 && record[0].equals(studentId) && record[1].equals(examCode)) {
+                    record[2] = String.valueOf(newScore); // Update score
+                    found = true;
+                }
+                writer.write(String.join("|", record));
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("[updateResult] Error: " + e.getMessage());
+            return false;
+        }
+        return found;
     }
 }

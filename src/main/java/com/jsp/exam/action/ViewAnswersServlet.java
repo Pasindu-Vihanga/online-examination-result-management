@@ -18,9 +18,14 @@ public class ViewAnswersServlet extends HttpServlet {
         String examCode = request.getParameter("examCode");
 
         if (studentId != null && examCode != null) {
+            // Evaluate answers and calculate score
             Map<String, Boolean> results = examService.evaluateStudentAnswers(studentId, examCode);
             int score = examService.calculateScore(studentId, examCode);
 
+            // Save the exam result
+            boolean isSaved = examService.saveExamResult(studentId, examCode);
+
+            // Prepare JSON response
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
 
@@ -28,6 +33,7 @@ public class ViewAnswersServlet extends HttpServlet {
             jsonOutput.append("\"studentId\":\"").append(studentId).append("\", ");
             jsonOutput.append("\"examCode\":\"").append(examCode).append("\", ");
             jsonOutput.append("\"score\":").append(score).append(", ");
+            jsonOutput.append("\"resultSaved\":").append(isSaved).append(", ");
             jsonOutput.append("\"answers\":[");
 
             for (Map.Entry<String, Boolean> entry : results.entrySet()) {
