@@ -4,9 +4,9 @@ import java.io.*;
 import java.util.*;
 
 public class ExamResultService {
-    private static final String STUDENT_ANSWER_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/student_attempts.txt";
-    private static final String QUESTION_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/questions.txt";
-    private static final String RESULT_FILE = "D:/IP/proj/Online-Exam-System/src/main/webapp/Questions/marks.txt"; // File to store exam results
+    private static final String STUDENT_ANSWER_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/student_attempts.txt";
+    private static final String QUESTION_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/questions.txt";
+    private static final String RESULT_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/marks.txt"; // File to store exam results
 
     public boolean storeAnswers(String studentId, String examCode, Map<String, String> answers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(STUDENT_ANSWER_FILE, true))) {
