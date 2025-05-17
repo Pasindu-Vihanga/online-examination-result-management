@@ -9,11 +9,11 @@ import java.util.List;
 public class feedbackservice {
     public static final String FEEDBACK_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/feedback.txt";
 
-    //Create Feedback
+    // Create Feedback
     public boolean createFeedback(feedbackmodel feedback) {
         if (!feedback.isValid()) return false;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FEEDBACK_FILE, true))) {
-            writer.write(feedback.getName() + "," + feedback.getEmail() + "," + feedback.getMessage());
+            writer.write(feedback.getName() + "," + feedback.getEmail() + "," + feedback.getMessage() + "," + feedback.getRating());
             writer.newLine();
             return true;
         } catch (IOException e) {
@@ -21,15 +21,16 @@ public class feedbackservice {
         }
         return false;
     }
-    //READ Feedback
+
+    // Read Feedback
     public List<feedbackmodel> readFeedback() {
         List<feedbackmodel> feedbackList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FEEDBACK_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",", 3);
-                if (parts.length == 3) {
-                    feedbackList.add(new feedbackmodel(parts[0], parts[1], parts[2], FEEDBACK_FILE));
+                String[] parts = line.split(",", 4);
+                if (parts.length == 4) {
+                    feedbackList.add(new feedbackmodel(parts[0], parts[1], parts[2], parts[3]));
                 }
             }
         } catch (IOException e) {
@@ -38,6 +39,7 @@ public class feedbackservice {
         return feedbackList;
     }
 
+    // Remove Feedback by Name
     public boolean removeFeedback(String name) {
         List<feedbackmodel> feedbackList = readFeedback();
         boolean deleted = false;
@@ -45,7 +47,7 @@ public class feedbackservice {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FEEDBACK_FILE))) {
             for (feedbackmodel feedback : feedbackList) {
                 if (!feedback.getName().equals(name)) {
-                    writer.write(feedback.getName() + "," + feedback.getEmail() + "," + feedback.getMessage());
+                    writer.write(feedback.getName() + "," + feedback.getEmail() + "," + feedback.getMessage() + "," + feedback.getRating());
                     writer.newLine();
                 } else {
                     deleted = true;

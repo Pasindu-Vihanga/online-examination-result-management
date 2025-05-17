@@ -32,9 +32,9 @@ public class FeedbackServlet extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String message = request.getParameter("message");
-        String filename = request.getParameter("filename"); // Optional
+        String rating = request.getParameter("rating"); // ✅ Get rating from form
 
-        feedbackmodel feedback = new feedbackmodel(name, email, message, filename);
+        feedbackmodel feedback = new feedbackmodel(name, email, message, rating); // ✅ Include rating
 
         if (feedback.isValid()) {
             feedbackService.createFeedback(feedback);
@@ -59,6 +59,6 @@ public class FeedbackServlet extends HttpServlet {
             }
         }
 
-        response.sendRedirect("feedback.jsp");
+        response.sendRedirect("feedbackrecords.jsp");
     }
 }
