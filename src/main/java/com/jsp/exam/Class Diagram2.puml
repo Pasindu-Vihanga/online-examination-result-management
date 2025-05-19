@@ -175,7 +175,7 @@ AdminLogger --> Adminservice
 StudentLog --> Adminservice
 
 Studentservice --> Student
-
+'el
 
 StudentMGservice --> StudentLog
 
