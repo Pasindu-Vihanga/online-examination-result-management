@@ -1,0 +1,193 @@
+@startuml
+
+' Service Classes
+class AdminLogger {
+  - adminDAO
+  + login()
+  + register()
+}
+
+class Adminservice {
+  - adminDAO
+  + boolean authenticate()
+  + boolean register()
+  + boolean usernameExist()
+}
+
+class Examservice {
+  - examDAO
+  + getExamDetails()
+  + getExamQuestions()
+  + boolean createExamQuestion()
+  + boolean deleteExam()
+  + boolean updateExamQuestion()
+}
+
+class ExamResultService {
+  - examDAO
+  + getCorrectAnswer()
+  + getExamQuestions()
+  + getExamCode()
+  + int calculateScore()
+  + boolean storeAnswer()
+  + boolean evaluateStudentAnswer()
+  + boolean saveExamResult
+  + boolean deleteResult
+  + boolean updateResult
+  + List getAllResults
+}
+
+class Exmpservice {
+  - examDAO
+  + void ensureFileExists()
+  + boolean startExamSession()
+  + boolean submitAnswer()
+  + int generateMarks()
+  + boolean endExamSession()
+  + int getStudentMarks()
+}
+
+class feedbackservice {
+  - feedbackDAO
+  + boolean createFeedback()
+  + List<> readFeedback()
+  + boolean submitAnswer()
+  + boolean removeFeedback()
+}
+
+class StudentMGservice {
+  - studentDAO
+  + boolean addStudent()
+  + List<> readStudent()
+  + boolean deleteStudent()
+}
+
+class Studentservice {
+  - studentDAO
+  + boolean addStudent()
+  + boolean readStudent()
+  + boolean deleteStudent()
+  + boolean updateStudent()
+}
+
+' Model Classes
+class AdminLog {
+  - username : String
+  - password : String
+  - filename : String
+  + getUsername()
+  + getPassword()
+  + getFilename()
+  + setUsername()
+  + setPassword()
+  + setFilename()
+}
+
+class ExamAnswer {
+  - studentId : String
+  - examCode : String
+  - questionNumber : String
+  - selectedAnswer : String
+  + getstudentId()
+  + getExamCode()
+  + getquestionNumber()
+  + getselectedAnswer()
+}
+
+class StudentLog {
+  - filename : String
+  + getfilename()
+}
+
+class ExamPaper {
+  - title : String
+  - faculty : String
+  - code : String
+  - duration : String
+  - totalQuestions : String
+  + getTitle()
+  + getFaculty()
+  + getCode()
+  + getDuration()
+  + getTotalQuestions()
+}
+class ExmpSession {
+  - studentId : String
+  - examCode : String
+  - startTime : long
+  - marks : int
+  + getStudentId()
+  + getExamCode()
+  + getStartTime()
+  + getMarks()
+  + int generateMarks()
+}
+class feedbackmodel {
+  - name : String
+  - email : String
+  - message : String
+  - rating : String
+  - filename : String
+  + getName()
+  + getEmail()
+  + getMessage()
+  + getRating()
+  + getFilename()
+  + setName()
+  + setEmail()
+  + setMessage()
+  + setRating()
+  + setFilename()
+}
+class Student {
+  - student_name : String
+  - student_password : String
+  - student_email : String
+  + getstudent_name()
+  + getstudent_password()
+  + getstudent_email()
+' Method
+  + boolean isValid()
+}
+
+class User {
+  - username : String
+  - password : String
+  - email : String
+  + getUsername()
+  + getPassword()
+  + getEmail()
+  + setUsername()
+  + setPassword()
+  + setEmail()
+' Method
+  + boolean isValid()
+}
+
+
+
+User <|-- StudentLog
+
+' Associations
+
+Adminservice --> AdminLog
+AdminLogger --> Adminservice
+StudentLog --> Adminservice
+
+Studentservice --> Student
+
+
+StudentMGservice --> StudentLog
+
+
+Examservice --> ExamPaper
+
+
+Exmpservice --> ExmpSession
+
+
+ExamResultService --> ExamAnswer
+
+
+feedbackservice --> feedbackmodel
+@enduml
