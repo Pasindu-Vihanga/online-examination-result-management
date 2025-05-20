@@ -92,7 +92,7 @@
                 <% if (results != null && !results.isEmpty()) { %>
                 <% for (String[] result : results) {
                     int score = Integer.parseInt(result[2].replaceAll("[^0-9]", "0"));
-                    String status = score >= 250 ? "✅ Pass" : "❌ Fail";
+                    String status = score >= 45 ? "✅ Pass" : "❌ Fail";
                 %>
                 <tr>
                     <td><%= result[0] %></td>
