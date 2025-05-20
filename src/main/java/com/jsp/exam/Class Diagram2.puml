@@ -1,12 +1,14 @@
 @startuml
-
 ' Service Classes
 class AdminLogger {
   - adminDAO
   + login()
   + register()
 }
-
+class AdminAuthService{
+   + boolean authenticate(AdminLog adminLog);
+   + boolean register(AdminLog adminLog)
+}
 class Adminservice {
   - adminDAO
   + boolean authenticate()
@@ -111,6 +113,7 @@ class ExamPaper {
   + getDuration()
   + getTotalQuestions()
 }
+
 class ExmpSession {
   - studentId : String
   - examCode : String
@@ -122,6 +125,7 @@ class ExmpSession {
   + getMarks()
   + int generateMarks()
 }
+
 class feedbackmodel {
   - name : String
   - email : String
@@ -139,6 +143,7 @@ class feedbackmodel {
   + setRating()
   + setFilename()
 }
+
 class Student {
   - student_name : String
   - student_password : String
@@ -146,7 +151,6 @@ class Student {
   + getstudent_name()
   + getstudent_password()
   + getstudent_email()
-' Method
   + boolean isValid()
 }
 
@@ -160,34 +164,28 @@ class User {
   + setUsername()
   + setPassword()
   + setEmail()
-' Method
   + boolean isValid()
 }
 
-
-
+' Inheritance
 User <|-- StudentLog
 
-' Associations
+' Dependency relationships (dashed arrows)
+Adminservice ..> AdminLog
+AdminLogger ..> Adminservice
+StudentLog ..> Adminservice
+AdminAuthService ..> Adminservice
+AdminAuthService ..> AdminLog
 
-Adminservice --> AdminLog
-AdminLogger --> Adminservice
-StudentLog --> Adminservice
 
-Studentservice --> Student
-'el
-
-StudentMGservice --> StudentLog
-
+Studentservice ..> Student
+StudentMGservice ..> StudentLog
 
 Examservice --> ExamPaper
 
-
 Exmpservice --> ExmpSession
 
-
 ExamResultService --> ExamAnswer
-
 
 feedbackservice --> feedbackmodel
 @enduml

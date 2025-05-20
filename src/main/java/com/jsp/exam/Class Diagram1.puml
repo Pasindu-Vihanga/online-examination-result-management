@@ -25,6 +25,8 @@ class ExamAnswer {
 }
 
 class StudentLog {
+  - filename : String
+  + getfilename()
 }
 
 class ExamPaper {
