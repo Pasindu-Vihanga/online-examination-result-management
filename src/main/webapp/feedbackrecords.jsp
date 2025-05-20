@@ -48,7 +48,8 @@
 <body>
 
 <div class="top-controls">
-    <a href="feedback.jsp" class="btn btn-outline-secondary">Back to Form</a>
+    <a href="admindashboard.jsp" class="btn btn-outline-secondary">Back To admin</a>
+    <a href="feedback.jsp" class="btn btn-outline-secondary">Back To Form</a>
     <button id="themeToggle" class="btn btn-outline-dark">🌙 Dark Mode</button>
 </div>
 

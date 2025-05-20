@@ -87,7 +87,7 @@
                     <span class="user-info">👤 <%= adminName %></span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-danger fw-bold" href="adminlogin.jsp">Logout</a>
+                    <a class="nav-link text-danger fw-bold" href="index.jsp">Logout</a>
                     <a class="nav-link text-danger fw-bold" href="feedbackrecords.jsp">Feedbacks</a>
                 </li>
             </ul>
