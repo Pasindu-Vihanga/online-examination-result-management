@@ -66,7 +66,7 @@ public class AdminResultManagementServlet extends HttpServlet {
             out.println("<div class='alert " + (success ? "alert-success" : "alert-danger") + " text-center'>");
             out.println("<h3>Action Status</h3>");
             out.println("<p><strong>" + statusMessage + "</strong></p>");
-            out.println("<a href='adminResultManagement.jsp' class='btn btn-primary'>Back to Management</a>");
+            out.println("<a href='/adminResultmanage.jsp' class='btn btn-primary'>Back to Management</a>");
             out.println("</div>");
 
             out.println("</div>");
