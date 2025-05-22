@@ -184,9 +184,9 @@ feedbackservice --> Adminservice
 Studentservice ..> Student
 StudentMGservice ..> StudentLog
 
-Examservice --> ExamPaper
+Examservice ..> ExamPaper
 
-Exmpservice --> ExmpSession
+Exmpservice ..> ExmpSession
 
 ExamResultService --> ExamAnswer
 

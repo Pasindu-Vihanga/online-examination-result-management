@@ -24,7 +24,7 @@ public class AdminResultManagementServlet extends HttpServlet {
             request.setAttribute("statusMessage", statusMessage);
         }
 
-        request.getRequestDispatcher("adminResultManagement.jsp").forward(request, response);
+        request.getRequestDispatcher("adminResultmanage.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

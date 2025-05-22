@@ -93,6 +93,8 @@ class User {
 ' Method
   + boolean isValid()
 }
+'Connections
+
 
 User <|-- StudentLog
 

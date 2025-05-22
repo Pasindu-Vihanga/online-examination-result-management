@@ -73,7 +73,7 @@
     <div class="admin-panel">
         <h2 class="text-center text-primary">Admin - Manage Exam Results</h2>
 
-        <form action="adminResultManagement.jsp" method="get" class="text-center">
+        <form action="AdminResultManagementServlet" method="get" class="text-center">
             <button type="submit" name="sort" class="btn btn-primary mb-3">🔄 Sort by Marks (Ascending)</button>
         </form>
 
