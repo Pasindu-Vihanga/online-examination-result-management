@@ -2,8 +2,9 @@
 <%@ page import="java.util.List" %>
 
 <%
-    // Retrieve the list of results from the request attribute
     List<String[]> results = (List<String[]>) request.getAttribute("results");
+    String sort = (String) request.getAttribute("sort");
+    if (sort == null) sort = "";
 %>
 
 <!DOCTYPE html>
@@ -16,6 +17,13 @@
 <body>
 <div class="container mt-5">
     <h2 class="text-primary text-center">Exam Results Management</h2>
+
+    <!-- Single button to sort all ascending -->
+    <form method="get" action="AdminResultManagementServlet" style="margin-bottom: 20px;">
+        <input type="hidden" name="sort" value="allAsc" />
+        <button type="submit" class="btn btn-primary">Sort All Ascending</button>
+    </form>
+
     <table class="table table-bordered text-center mt-3">
         <thead class="table-dark">
         <tr>
@@ -44,12 +52,14 @@
                     <input type="hidden" name="studentId" value="<%= studentId %>">
                     <input type="hidden" name="examCode" value="<%= examCode %>">
                     <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="sort" value="<%= sort %>"> <!-- pass current sort -->
                     <button type="submit" class="btn btn-danger btn-sm">🗑️ Delete</button>
                 </form>
                 <form method="post" action="AdminResultManagementServlet" style="display:inline;">
                     <input type="hidden" name="studentId" value="<%= studentId %>">
                     <input type="hidden" name="examCode" value="<%= examCode %>">
                     <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="sort" value="<%= sort %>"> <!-- pass current sort -->
                     <input type="number" name="newScore" class="form-control form-control-sm d-inline w-25" placeholder="New Score" required>
                     <button type="submit" class="btn btn-warning btn-sm">✏️ Edit</button>
                 </form>

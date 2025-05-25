@@ -108,7 +108,7 @@
     <ul class="list-group">
         <li class="list-group-item"><a href="manage.jsp">🔹 Admin Management - Add/Remove/View Admins</a></li>
         <li class="list-group-item"><a href="Exmindex.jsp">📊 Exam Manage - Add/Remove/Edit Exams</a></li>
-        <li class="list-group-item"><a href="adminResultmanage.jsp">📊 Results Manage - Add/Remove/Edit Results</a></li>
+        <li class="list-group-item"><a href="AdminResultManagementServlet?sort=">📊 Results Manage - Add/Remove/Edit Results</a></li>
         <li class="list-group-item"><a href="studentmanage.jsp">🎓 Manage Students - Add/Remove/View Students</a></li>
     </ul>
 </section>

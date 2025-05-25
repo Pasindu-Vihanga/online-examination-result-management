@@ -1,7 +1,6 @@
 package com.jsp.exam.action;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
@@ -18,9 +17,23 @@ public class AdminResultManagementServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // getAllResults() returns List<String[]> not ResultLinkedList
+        String sort = request.getParameter("sort");  // e.g. "allAsc", or null if none
+
         List<String[]> results = examService.getAllResults();
 
+        if ("allAsc".equals(sort)) {
+            // Sort by studentId, then examCode, then marks ascending
+            results.sort((a, b) -> {
+                int cmp = a[0].compareToIgnoreCase(b[0]); // studentId
+                if (cmp != 0) return cmp;
+                cmp = a[1].compareToIgnoreCase(b[1]);     // examCode
+                if (cmp != 0) return cmp;
+                return Integer.compare(Integer.parseInt(a[2]), Integer.parseInt(b[2])); // marks
+            });
+        }
+
+        // Pass current sort param to JSP for forms or links if needed
+        request.setAttribute("sort", sort);
         request.setAttribute("results", results);
         request.getRequestDispatcher("adminResultmanage.jsp").forward(request, response);
     }
@@ -30,31 +43,35 @@ public class AdminResultManagementServlet extends HttpServlet {
         String action = request.getParameter("action");
         String studentId = request.getParameter("studentId");
         String examCode = request.getParameter("examCode");
-        String statusMessage = "";
         boolean success = false;
 
         if ("delete".equals(action)) {
             success = examService.deleteResult(studentId, examCode);
-            statusMessage = success ? "Record deleted successfully!" : "Failed to delete record.";
         } else if ("update".equals(action)) {
             try {
                 int newScore = Integer.parseInt(request.getParameter("newScore"));
                 success = examService.updateResult(studentId, examCode, newScore);
-                statusMessage = success ? "Record updated successfully!" : "Failed to update record.";
             } catch (NumberFormatException e) {
-                statusMessage = "Invalid score format.";
+                success = false;
             }
-        } else {
-            statusMessage = "Invalid action.";
         }
 
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<html><head><title>Result Management</title></head><body>");
-            out.println("<div style='padding: 10px; font-family: Arial; color: " + (success ? "green" : "red") + ";'>");
-            out.println("<h3>" + statusMessage + "</h3>");
-            out.println("<a href='AdminResultManagementServlet'>Back to Results</a>");
-            out.println("</div></body></html>");
+        // Get current sort parameter from the request so we can preserve it on redirect
+        String sort = request.getParameter("sort");
+        if (sort == null) sort = "";
+
+        // Redirect back to GET with current sort parameter, to refresh the results list
+        String redirectUrl = "AdminResultManagementServlet";
+        if (!sort.isEmpty()) {
+            redirectUrl += "?sort=" + sort;
         }
+
+        // Optionally, you can store a status message in session to show after redirect
+        HttpSession session = request.getSession();
+        session.setAttribute("statusMessage", success ?
+                (action.equals("delete") ? "Record deleted successfully!" : "Record updated successfully!") :
+                (action.equals("delete") ? "Failed to delete record." : "Failed to update record."));
+
+        response.sendRedirect(redirectUrl);
     }
 }
