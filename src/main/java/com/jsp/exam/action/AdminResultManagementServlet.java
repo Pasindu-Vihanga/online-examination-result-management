@@ -22,17 +22,29 @@ public class AdminResultManagementServlet extends HttpServlet {
         List<String[]> results = examService.getAllResults();
 
         if ("allAsc".equals(sort)) {
-            // Sort by studentId, then examCode, then marks ascending
-            results.sort((a, b) -> {
-                int cmp = a[0].compareToIgnoreCase(b[0]); // studentId
-                if (cmp != 0) return cmp;
-                cmp = a[1].compareToIgnoreCase(b[1]);     // examCode
-                if (cmp != 0) return cmp;
-                return Integer.compare(Integer.parseInt(a[2]), Integer.parseInt(b[2])); // marks
-            });
+            // Manual selection sort by marks ascending only
+            int n = results.size();
+
+            for (int i = 0; i < n - 1; i++) {
+                int minIndex = i;
+
+                for (int j = i + 1; j < n; j++) {
+                    int marksJ = Integer.parseInt(results.get(j)[2]);
+                    int marksMin = Integer.parseInt(results.get(minIndex)[2]);
+
+                    if (marksJ < marksMin) {
+                        minIndex = j;
+                    }
+                }
+
+                if (minIndex != i) {
+                    String[] temp = results.get(i);
+                    results.set(i, results.get(minIndex));
+                    results.set(minIndex, temp);
+                }
+            }
         }
 
-        // Pass current sort param to JSP for forms or links if needed
         request.setAttribute("sort", sort);
         request.setAttribute("results", results);
         request.getRequestDispatcher("adminResultmanage.jsp").forward(request, response);
@@ -56,17 +68,14 @@ public class AdminResultManagementServlet extends HttpServlet {
             }
         }
 
-        // Get current sort parameter from the request so we can preserve it on redirect
         String sort = request.getParameter("sort");
         if (sort == null) sort = "";
 
-        // Redirect back to GET with current sort parameter, to refresh the results list
         String redirectUrl = "AdminResultManagementServlet";
         if (!sort.isEmpty()) {
             redirectUrl += "?sort=" + sort;
         }
 
-        // Optionally, you can store a status message in session to show after redirect
         HttpSession session = request.getSession();
         session.setAttribute("statusMessage", success ?
                 (action.equals("delete") ? "Record deleted successfully!" : "Record updated successfully!") :

@@ -3,8 +3,8 @@ package com.jsp.exam.service;
 import java.io.*;
 import java.util.*;
 
-import com.jsp.exam.dsa.Node;
 import com.jsp.exam.dsa.ResultLinkedList;
+import com.jsp.exam.dsa.ResultLinkedList.Node;
 import com.jsp.exam.model.StudentResult;
 
 public class ExamResultService {
@@ -50,7 +50,7 @@ public class ExamResultService {
         return examCodes;
     }
 
-    // Evaluate student answers and return map of questionNumber -> correctness (true/false)
+    // Evaluate student answers correctness
     public Map<String, Boolean> evaluateStudentAnswers(String studentId, String examCode) {
         Map<String, Boolean> resultMap = new HashMap<>();
         File file = new File(STUDENT_ANSWER_FILE);
@@ -68,7 +68,8 @@ public class ExamResultService {
                             if (answerParts.length == 2) {
                                 String questionNumber = answerParts[0];
                                 String selectedAnswer = answerParts[1];
-                                resultMap.put(questionNumber, correctAnswers.getOrDefault(questionNumber, "").equals(selectedAnswer));
+                                resultMap.put(questionNumber,
+                                        correctAnswers.getOrDefault(questionNumber, "").equals(selectedAnswer));
                             }
                         }
                     }
@@ -80,7 +81,7 @@ public class ExamResultService {
         return resultMap;
     }
 
-    // Get correct answers for a given exam code
+    // Get correct answers for given exam code
     public Map<String, String> getCorrectAnswers(String examCode) {
         Map<String, String> correctAnswers = new HashMap<>();
         File file = new File(QUESTION_FILE);
@@ -101,13 +102,13 @@ public class ExamResultService {
         return correctAnswers;
     }
 
-    // Calculate total correct score for student and exam
+    // Calculate total correct score
     public int calculateScore(String studentId, String examCode) {
         Map<String, Boolean> results = evaluateStudentAnswers(studentId, examCode);
         return (int) results.values().stream().filter(Boolean::booleanValue).count();
     }
 
-    // Save final exam result (studentId|examCode|score) to result file
+    // Save final exam result
     public boolean saveExamResult(String studentId, String examCode) {
         int score = calculateScore(studentId, examCode);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(RESULT_FILE, true))) {
@@ -120,9 +121,7 @@ public class ExamResultService {
         }
     }
 
-    // --- Now methods using your custom ResultLinkedList ---
-
-    // Get all results from file, return as List<String[]> for compatibility
+    // Load all results into linked list and return as List<String[]>
     public List<String[]> getAllResults() {
         ResultLinkedList list = new ResultLinkedList();
         File file = new File(RESULT_FILE);
@@ -137,8 +136,7 @@ public class ExamResultService {
                             String studentId = parts[0];
                             String examCode = parts[1];
                             int score = Integer.parseInt(parts[2].trim());
-                            StudentResult result = new StudentResult(studentId, examCode, score);
-                            list.add(result);
+                            list.add(studentId, examCode, score);
                         } catch (NumberFormatException e) {
                             System.err.println("[getAllResults] Invalid score: " + parts[2]);
                         }
@@ -149,64 +147,65 @@ public class ExamResultService {
             }
         }
 
-        List<String[]> resultsList = new ArrayList<>();
-        Node curr = list.getHead();
-        while (curr != null) {
-            StudentResult data = curr.data;
-            resultsList.add(new String[] {
-                    data.getStudentId(),
-                    data.getExamCode(),
-                    String.valueOf(data.getMarks())
-            });
-            curr = curr.next;
-        }
-
-        return resultsList;
+        return list.toListOfStringArrays();
     }
 
-    // Delete a result from linked list and rewrite file
+    // Delete a result and rewrite file
     public boolean deleteResult(String studentId, String examCode) {
-        ResultLinkedList list = new ResultLinkedList();
-
-        // Load from file
-        List<String[]> allResults = getAllResults();
-        for (String[] rec : allResults) {
-            StudentResult res = new StudentResult(rec[0], rec[1], Integer.parseInt(rec[2]));
-            list.add(res);
+        ResultLinkedList list = loadResultsIntoList();
+        if (!list.delete(studentId, examCode)) {
+            return false;
         }
-
-        boolean deleted = list.delete(studentId, examCode);
-        if (!deleted) return false;
-
         return rewriteFileFromLinkedList(list);
     }
 
-    // Update a result's score and rewrite file
+    // Update a result and rewrite file
     public boolean updateResult(String studentId, String examCode, int newScore) {
-        ResultLinkedList list = new ResultLinkedList();
-
-        // Load from file
-        List<String[]> allResults = getAllResults();
-        for (String[] rec : allResults) {
-            StudentResult res = new StudentResult(rec[0], rec[1], Integer.parseInt(rec[2]));
-            list.add(res);
+        ResultLinkedList list = loadResultsIntoList();
+        if (!list.update(studentId, examCode, newScore)) {
+            return false;
         }
-
-        boolean updated = list.update(studentId, examCode, newScore);
-        if (!updated) return false;
-
         return rewriteFileFromLinkedList(list);
     }
 
-    // Rewrite the entire results file from linked list data
+    // Load all results from file into a ResultLinkedList
+    private ResultLinkedList loadResultsIntoList() {
+        ResultLinkedList list = new ResultLinkedList();
+        File file = new File(RESULT_FILE);
+
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length == 3) {
+                        try {
+                            String studentId = parts[0];
+                            String examCode = parts[1];
+                            int score = Integer.parseInt(parts[2].trim());
+                            list.add(studentId, examCode, score);
+                        } catch (NumberFormatException e) {
+                            System.err.println("[loadResultsIntoList] Invalid score: " + parts[2]);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("[loadResultsIntoList] Error: " + e.getMessage());
+            }
+        }
+
+        return list;
+    }
+
+    // Rewrite file from linked list
     private boolean rewriteFileFromLinkedList(ResultLinkedList list) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(RESULT_FILE))) {
-            Node curr = list.getHead();
-            while (curr != null) {
-                StudentResult data = curr.data;
+            Node current = list.getHead();
+            while (current != null) {
+                StudentResult data = current.data;
                 writer.write(data.getStudentId() + "|" + data.getExamCode() + "|" + data.getMarks());
                 writer.newLine();
-                curr = curr.next;
+                current = current.next;
             }
             return true;
         } catch (IOException e) {
