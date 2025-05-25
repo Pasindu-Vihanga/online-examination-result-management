@@ -25,10 +25,10 @@ public class ResultLinkedList {
             head = newNode;
         } else {
             Node curr = head;
-            while (curr.next != null) {
+            while (curr.next != null) {   // Traverse to last node
                 curr = curr.next;
             }
-            curr.next = newNode;
+            curr.next = newNode;    // Link the new node
         }
     }
 
@@ -80,6 +80,7 @@ public class ResultLinkedList {
 
     // Alternatively, get all results as List<String[]>
     public List<String[]> toListOfStringArrays() {
+        //Convert LinkedList into List for easier to handy bunch of data
         List<String[]> list = new ArrayList<>();
         Node current = head;
         while (current != null) {
