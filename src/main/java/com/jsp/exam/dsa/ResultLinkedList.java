@@ -5,18 +5,6 @@ import com.jsp.exam.model.StudentResult;
 public class ResultLinkedList {
     private Node head;
 
-    public void add(StudentResult result) {
-        Node newNode = new Node(result);
-        if (head == null) {
-            head = newNode;
-        } else {
-            Node current = head;
-            while (current.next != null)
-                current = current.next;
-            current.next = newNode;
-        }
-    }
-
     public boolean update(String studentId, String examCode, int newScore) {
         Node current = head;
         while (current != null) {
