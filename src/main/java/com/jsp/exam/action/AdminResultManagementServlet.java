@@ -23,22 +23,38 @@ public class AdminResultManagementServlet extends HttpServlet {
 
         if ("allAsc".equals(sort)) {
             // Manual selection sort by marks ascending only
-            int n = results.size();
+            int n = results.size(); // Retrieve number of elements in linked list
 
+            /*
+            Outer Loop – Moves Selection Point,
+
+                for (int i = 0; i < n - 1; i++) {
+                    int minIndex = i;
+        Loops over the entire list, selecting each index i to begin finding the smallest element.
+
+        Initializes
+                    minIndex = i,
+        assuming the current element is the smallest.
+
+              */
             for (int i = 0; i < n - 1; i++) {
                 int minIndex = i;
-
+                    // Inner Loop – Find the Smallest Marks
                 for (int j = i + 1; j < n; j++) {
-                    int marksJ = Integer.parseInt(results.get(j)[2]);
-                    int marksMin = Integer.parseInt(results.get(minIndex)[2]);
+                    int marksJ = Integer.parseInt(results.get(j)[2]);  //Extracts: marks (results.get(j)[2]) and converts them from String to Integer.
+                    int marksMin = Integer.parseInt(results.get(minIndex)[2]); //Updates: minIndex when a smaller mark is found
 
                     if (marksJ < marksMin) {
                         minIndex = j;
                     }
                 }
 
+                // Swap the Elements (Selection Sort Step)
                 if (minIndex != i) {
-                    String[] temp = results.get(i);
+                    String[] temp = results.get(i); //Checks if minIndex changed (meaning a smaller value was found).
+
+                    //Swaps the student result at i with the student result at minIndex.
+
                     results.set(i, results.get(minIndex));
                     results.set(minIndex, temp);
                 }

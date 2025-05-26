@@ -4,6 +4,14 @@ import com.jsp.exam.model.StudentResult;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Each Node stores student results and a reference to the next node.
+
+    next enables the chaining of nodes, forming a linked list.
+
+    New nodes are dynamically created when inserting student results.
+*/
+
 public class ResultLinkedList {
     // Inner Node class
     public static class Node {
@@ -18,6 +26,23 @@ public class ResultLinkedList {
 
     private Node head;
 
+
+    /*
+    How It Works in Practice?
+        Let’s visualize what happens when you add nodes:
+
+        Example: Adding Students
+1️⃣ First student added (head == null)
+
+head → [Student A] → null
+2️⃣ Second student added
+
+head → [Student A] → [Student B] → null
+3️⃣ Third student added
+
+    head → [Student A] → [Student B] → [Student C] → null
+        Each new node is appended at the tail of the list.
+    */
 
     // Add new StudentResult node at end
     public void add(String studentId, String examCode, int score) {
@@ -93,6 +118,21 @@ public class ResultLinkedList {
   🔹 Useful for operations like sorting, searching, or exporting results.
 
   */
+
+    /*why convert LinkedList to array
+        There are several reasons why converting a LinkedList to an array can be useful:
+
+        1. Fast Random Access
+            Linked lists require sequential traversal (O(n)) to access an element.
+            Arrays allow direct indexing (arr[i]), making retrieval O(1).
+
+        2. Sorting & Searching Efficiency
+            Many sorting algorithms (like QuickSort) work efficiently on arrays.
+
+        Binary search (O(log n)) can be used on sorted arrays,
+        but linked lists must use linear search (O(n)).
+
+       */
 
     // Alternatively, get all results as List<String[]>
     public List<String[]> toListOfStringArrays() {
