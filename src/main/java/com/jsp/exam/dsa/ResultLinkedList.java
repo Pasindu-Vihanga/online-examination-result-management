@@ -86,12 +86,26 @@ public class ResultLinkedList {
         return arr;
     }
 
+  /*  *** CONVERT LinkedList into Array ***
+
+  🔹 Converts the dynamic linked list into a fixed array for easier access.
+  🔹 Allows direct indexing (arr[i]) instead of traversal (while-loop).
+  🔹 Useful for operations like sorting, searching, or exporting results.
+
+  */
+
     // Alternatively, get all results as List<String[]>
     public List<String[]> toListOfStringArrays() {
         //Convert LinkedList into List for easier to handy bunch of data
         List<String[]> list = new ArrayList<>();
-        Node current = head;
+        Node current = head;        //current starts at head, meaning traversal starts from the first node.
         while (current != null) {
+
+           /* Loop through the linked list until current == null.
+              Each StudentResult is stored in the arr array.
+              Moves current to the next node, ensuring all elements are copied.
+           */
+
             String[] entry = new String[] {
                     current.data.getStudentId(),
                     current.data.getExamCode(),
