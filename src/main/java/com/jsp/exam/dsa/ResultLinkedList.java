@@ -18,6 +18,7 @@ public class ResultLinkedList {
 
     private Node head;
 
+
     // Add new StudentResult node at end
     public void add(String studentId, String examCode, int score) {
         Node newNode = new Node(studentId, examCode, score);
@@ -46,16 +47,23 @@ public class ResultLinkedList {
         return false;
     }
 
+    /* *** FOR DELETE ***
+    🔹 The method traverses the linked list one node at a time.
+    🔹 If the matching node is found, it is removed by reassigning links.
+    🔹 If the node is at the beginning, the head moves forward.
+    🔹 If the node is in the middle or end, the previous node skips over it.
+    */
+
     // Delete node by studentId and examCode
     public boolean delete(String studentId, String examCode) {
         Node current = head, prev = null;
-        while (current != null) {
+        while (current != null) {  // Loops until the end of the list
             if (current.data.getStudentId().equals(studentId) &&
-                    current.data.getExamCode().equals(examCode)) {
+                    current.data.getExamCode().equals(examCode)) { //Compares the node's studentId and examCode with the given values.
                 if (prev == null) {
-                    head = current.next;
+                    head = current.next;  //head is forward to another link
                 } else {
-                    prev.next = current.next;
+                    prev.next = current.next;  //if it's head is here,then link is connect to one another link
                 }
                 return true;
             }
