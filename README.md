@@ -5,9 +5,10 @@
 [![Apache Tomcat](https://img.shields.io/badge/Apache%20Tomcat-9%20%2F%2010-yellow.svg?style=flat&logo=apachetomcat)](https://tomcat.apache.org/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple.svg?style=flat&logo=bootstrap)](https://getbootstrap.com/)
 [![Maven](https://img.shields.io/badge/Maven-Build%20Tool-C71A36.svg?style=flat&logo=apachemaven)](https://maven.apache.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-4479A1.svg?style=flat&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-An enterprise-ready web-based **Online Examination and Result Management System** engineered with Java Servlets, JavaServer Pages (JSP), and Data Structures & Algorithms (Custom Linked Lists for high-efficiency result sorting and rank generation).
+An enterprise-ready web-based **Online Examination and Result Management System** engineered with Java Servlets, JavaServer Pages (JSP), MySQL Database via JDBC, and Data Structures & Algorithms (Custom Linked Lists for high-efficiency result sorting and rank generation).
 
 ---
 
@@ -46,9 +47,10 @@ An enterprise-ready web-based **Online Examination and Result Management System*
                        [ Business Service Layer ]
            (Studentservice, Examservice, ExamResultService)
                                   │
-                                  ▼
-                      [ Data Structure & Storage ]
-         (Custom ResultLinkedList & File-Based Storage Engine)
+         ┌────────────────────────┴────────────────────────┐
+         ▼                                                 ▼
+[ Custom DSA ResultLinkedList ]                 [ MySQL 8.0 Database ]
+  (In-Memory Sorting & Ranking)                  (JDBC / online_exam_db)
 ```
 
 ---
@@ -61,9 +63,24 @@ An enterprise-ready web-based **Online Examination and Result Management System*
 | **Presentation Layer** | JSP (JavaServer Pages), JSTL, HTML5, Vanilla CSS |
 | **UI Framework** | Bootstrap 5.3 + FontAwesome |
 | **Backend Framework** | Jakarta EE / Java Servlets 6.0 |
+| **Database** | MySQL Server 8.0+ (JDBC / `online_exam_db`) |
 | **Build & Dependency Tool** | Apache Maven |
 | **Web Server** | Apache Tomcat 9 / 10 |
 | **Data Structures** | Custom Singly Linked List (`ResultLinkedList`) |
+
+---
+
+## 🗄️ Database Setup (MySQL)
+
+1. Make sure your MySQL Server is running.
+2. Run the database setup script located in [`database/schema.sql`](database/schema.sql):
+   ```bash
+   mysql -u root -p < database/schema.sql
+   ```
+3. Database configuration is centralized in [`DBConnection.java`](src/main/java/com/jsp/exam/util/DBConnection.java):
+   - **Database Name**: `online_exam_db`
+   - **Default Port**: `3306`
+   - **Default User**: `root`
 
 ---
 

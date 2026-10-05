@@ -20,7 +20,7 @@ public class AdminLoginServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        adminService = new Adminservice(); // Dependency injection using interface
+        adminService = new Adminservice();
     }
 
     @Override
@@ -31,50 +31,36 @@ public class AdminLoginServlet extends HttpServlet {
         String inputPassword = request.getParameter("password");
 
         if (inputUsername == null || inputPassword == null || inputUsername.trim().isEmpty() || inputPassword.trim().isEmpty()) {
-            request.setAttribute("error", "Invalid input. Username and password are required.");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+            response.sendRedirect("adminlogin.jsp?error=empty");
             return;
         }
 
         inputUsername = inputUsername.trim();
         inputPassword = inputPassword.trim();
 
-        AdminLog adminLog = new AdminLog(inputUsername, inputPassword, "D:/IP/proj/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/admin.txt");
+        AdminLog adminLog = new AdminLog(inputUsername, inputPassword, "MySQL");
         boolean isAuthenticated = adminService.authenticate(adminLog);
 
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.println("<!DOCTYPE html>");
-        out.println("<html lang='en'>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-        out.println("<title>Login Response</title>");
-        out.println("<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<div class='container mt-5'>");
-
         if (isAuthenticated) {
-            // **Session Handling: Ensuring only successful login creates session**
             HttpSession session = request.getSession();
             session.setAttribute("inputUsername", inputUsername);
+            AdminLogger.log(null, inputUsername, "Login successful");
             response.sendRedirect("admindashboard.jsp");
-            AdminLogger.log("D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/log.txt", inputUsername, "Login successful");
-            out.println("<div class='alert alert-success text-center'>");
-            out.println("<h3>Login successful!</h3>");
-            out.println("<p>Welcome, <strong>" + inputUsername + "</strong></p>");
-            out.println("<a href='admindashboard.jsp' class='btn btn-primary'>Dashboard</a>");
-            out.println("</div>");
         } else {
-            AdminLogger.log("D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/log.txt", inputUsername, "Login failed");
-            out.println("<div class='alert alert-danger text-center'>");
-            out.println("<h3>Invalid credentials!</h3>");
-            out.println("<a href='adminlogin.jsp' class='btn btn-secondary'>Back to Login</a>");
-            out.println("</div>");
+            AdminLogger.log(null, inputUsername, "Login failed");
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'>");
+            out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+            out.println("<title>Login Failed</title>");
+            out.println("<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>");
+            out.println("</head><body class='bg-light'><div class='container mt-5'>");
+            out.println("<div class='card shadow-sm p-4 text-center' style='max-width: 450px; margin: auto;'>");
+            out.println("<h3 class='text-danger mb-3'>Invalid Admin Credentials!</h3>");
+            out.println("<p class='text-muted'>Please verify your username and password.</p>");
+            out.println("<a href='adminlogin.jsp' class='btn btn-primary mt-2'>Back to Login</a>");
+            out.println("</div></div></body></html>");
+            out.close();
         }
-
-        out.println("</div></body></html>");
-        out.close();
     }
 }

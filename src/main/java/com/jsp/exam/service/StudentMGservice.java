@@ -1,64 +1,65 @@
- package com.jsp.exam.service;
+package com.jsp.exam.service;
 
 import com.jsp.exam.model.StudentLog;
+import com.jsp.exam.util.DBConnection;
 
-import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentMGservice {
-    private static final String STUDENT_CREDENTIAL_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/credentials.txt";
 
     // Create user
     public boolean addStudent(StudentLog studentLog) {
         if (!studentLog.isValid()) {
             return false;
         }
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(STUDENT_CREDENTIAL_FILE, true))) {
-            bufferedWriter.write(studentLog.getUsername() + "," + studentLog.getPassword() + "," + studentLog.getEmail());
-            bufferedWriter.newLine();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+        String sql = "INSERT INTO students (student_name, student_password, student_email) VALUES (?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, studentLog.getUsername());
+            ps.setString(2, studentLog.getPassword());
+            ps.setString(3, studentLog.getEmail());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[StudentMGservice.addStudent] Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     // Read users
     public List<StudentLog> readStudent() {
         List<StudentLog> readStudents = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(STUDENT_CREDENTIAL_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    readStudents.add(new StudentLog(parts[0], parts[1], parts[2])); // Fixed incorrect parameter
-                }
+        String sql = "SELECT student_name, student_password, student_email FROM students ORDER BY id ASC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                readStudents.add(new StudentLog(
+                        rs.getString("student_name"),
+                        rs.getString("student_password"),
+                        rs.getString("student_email")
+                ));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("[StudentMGservice.readStudent] Error: " + e.getMessage());
         }
         return readStudents;
     }
 
     // Delete user
     public boolean deleteStudent(String username) {
-        List<StudentLog> readStudents = readStudent();
-        boolean deleted = false;
-
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(STUDENT_CREDENTIAL_FILE))) {
-            for (StudentLog student : readStudents) {
-                if (!student.getUsername().equals(username)) { // Fix: compare usernames correctly
-                    bufferedWriter.write(student.getUsername() + "," + student.getPassword() + "," + student.getEmail());
-                    bufferedWriter.newLine();
-                } else {
-                    deleted = true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        String sql = "DELETE FROM students WHERE student_name = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[StudentMGservice.deleteStudent] Error: " + e.getMessage());
+            return false;
         }
-        return deleted;
     }
-
 }

@@ -1,61 +1,65 @@
 package com.jsp.exam.service;
 
 import com.jsp.exam.model.feedbackmodel;
+import com.jsp.exam.util.DBConnection;
 
-import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class feedbackservice {
-    public static final String FEEDBACK_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/feedback.txt";
 
     // Create Feedback
     public boolean createFeedback(feedbackmodel feedback) {
         if (!feedback.isValid()) return false;
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FEEDBACK_FILE, true))) {
-            writer.write(feedback.getName() + "," + feedback.getEmail() + "," + feedback.getMessage() + "," + feedback.getRating());
-            writer.newLine();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+        String sql = "INSERT INTO feedbacks (name, email, comments, rating) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, feedback.getName());
+            ps.setString(2, feedback.getEmail());
+            ps.setString(3, feedback.getMessage());
+            ps.setString(4, feedback.getRating());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[feedbackservice.createFeedback] Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     // Read Feedback
     public List<feedbackmodel> readFeedback() {
         List<feedbackmodel> feedbackList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FEEDBACK_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",", 4);
-                if (parts.length == 4) {
-                    feedbackList.add(new feedbackmodel(parts[0], parts[1], parts[2], parts[3]));
-                }
+        String sql = "SELECT name, email, comments, rating FROM feedbacks ORDER BY id DESC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                feedbackList.add(new feedbackmodel(
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("comments"),
+                        rs.getString("rating")
+                ));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("[feedbackservice.readFeedback] Error: " + e.getMessage());
         }
         return feedbackList;
     }
 
     // Remove Feedback by Name
     public boolean removeFeedback(String name) {
-        List<feedbackmodel> feedbackList = readFeedback();
-        boolean deleted = false;
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FEEDBACK_FILE))) {
-            for (feedbackmodel feedback : feedbackList) {
-                if (!feedback.getName().equals(name)) {
-                    writer.write(feedback.getName() + "," + feedback.getEmail() + "," + feedback.getMessage() + "," + feedback.getRating());
-                    writer.newLine();
-                } else {
-                    deleted = true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        String sql = "DELETE FROM feedbacks WHERE name = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[feedbackservice.removeFeedback] Error: " + e.getMessage());
+            return false;
         }
-        return deleted;
     }
 }

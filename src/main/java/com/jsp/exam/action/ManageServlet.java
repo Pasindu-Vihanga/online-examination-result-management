@@ -16,88 +16,86 @@ import java.util.List;
 
 @WebServlet("/manage")
 public class ManageServlet extends HttpServlet {
-    private AdminMGservice adminService = new AdminMGservice();
+    private final AdminMGservice adminService = new AdminMGservice();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action"); // Can be "create", "read", "update", or "delete"
+        String action = request.getParameter("action");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         boolean result = false;
-        PrintWriter out = response.getWriter();
         response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
 
         out.println("<!DOCTYPE html>");
-        out.println("<html lang='en'><head><title>Admin Management</title>");
+        out.println("<html lang='en'><head><meta charset='UTF-8'>");
+        out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+        out.println("<title>Admin Management</title>");
         out.println("<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>");
-        out.println("</head><body><div class='container mt-5'>");
+        out.println("</head><body class='bg-light'><div class='container mt-5'>");
 
-        HttpSession session = request.getSession();
-        session.setAttribute("inputUsername", username);
+        if (action == null) {
+            action = "";
+        }
 
         switch (action) {
             case "create":
-                AdminLog newAdmin = new AdminLog(username, password, "D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/admin.txt");
+                AdminLog newAdmin = new AdminLog(username, password, "MySQL");
                 result = adminService.createAdmin(newAdmin);
-                AdminLogger.log("D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/log.txt", username,
-                        result ? "Admin created successfully" : "Failed to create admin");
+                AdminLogger.log(null, username, result ? "Admin created successfully" : "Failed to create admin");
                 out.println(result ? "<div class='alert alert-success'>Admin created successfully!</div>"
-                        : "<div class='alert alert-danger'>Failed to create admin!</div>");
+                        : "<div class='alert alert-danger'>Failed to create admin (username might already exist)!</div>");
                 break;
 
             case "update":
-                AdminLog updatedAdmin = new AdminLog(username, password, "D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/admin.txt");
                 result = adminService.updateAdmin(username, password);
-                AdminLogger.log("D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/log.txt", username,
-                        result ? "Admin credentials updated successfully" : "Failed to update admin");
+                AdminLogger.log(null, username, result ? "Admin credentials updated successfully" : "Failed to update admin");
                 out.println(result ? "<div class='alert alert-success'>Admin updated successfully!</div>"
                         : "<div class='alert alert-danger'>Failed to update admin!</div>");
                 break;
 
             case "delete":
                 result = adminService.deleteAdmin(username);
-                AdminLogger.log("D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/log.txt", username,
-                        result ? "Admin deleted successfully" : "Failed to delete admin");
+                AdminLogger.log(null, username, result ? "Admin deleted successfully" : "Failed to delete admin");
                 out.println(result ? "<div class='alert alert-success'>Admin deleted successfully!</div>"
                         : "<div class='alert alert-danger'>Failed to delete admin!</div>");
                 break;
 
             case "read":
                 List<AdminLog> admins = adminService.readAdmin();
-                AdminLogger.log("D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/log.txt", username, "Admin list viewed");
-                out.println("<div class='container mt-3'>");
-                out.println("<h4 class='text-center mb-2'>Admin List</h4>");
-                out.println("<div class='card p-2'>");
-                out.println("<div class='card-body p-1'>");
+                AdminLogger.log(null, username, "Admin list viewed");
+                out.println("<div class='card shadow-sm p-4'>");
+                out.println("<h4 class='mb-3'>Registered Admins</h4>");
 
                 if (admins != null && !admins.isEmpty()) {
-                    out.println("<ul class='list-group list-group-flush'>");
+                    out.println("<ul class='list-group mb-3'>");
                     for (AdminLog admin : admins) {
-                        out.println("<li class='list-group-item d-flex align-items-center p-1' style='display: flex; justify-content: space-between;'>");
-                        out.println("<span class='small'>" + admin.getUsername() + "</span>");
-                        out.println("<span class='badge bg-primary ms-1'>Admin</span>");
+                        out.println("<li class='list-group-item d-flex justify-content-between align-items-center'>");
+                        out.println("<span><strong>" + admin.getUsername() + "</strong></span>");
+                        out.println("<span class='badge bg-primary'>Admin</span>");
                         out.println("</li>");
                     }
                     out.println("</ul>");
                 } else {
-                    out.println("<p class='text-center text-danger small'>No admins found.</p>");
+                    out.println("<p class='text-muted'>No admins found.</p>");
                 }
 
-                out.println("</div></div></div>");
+                out.println("</div>");
                 break;
 
             default:
-                AdminLogger.log("D:/IP/proj/Online-Exam-System/src/main/webapp/logincreds/log.txt", username, "Invalid action attempted");
+                AdminLogger.log(null, username, "Invalid action attempted");
                 out.println("<div class='alert alert-warning'>Invalid action!</div>");
                 break;
         }
 
-        out.println("<a href='manage.jsp' class='btn btn-secondary mt-3'>Back to Admin Panel</a>");
-        out.println("<a href='logview.jsp' class ='btn btn-secondary mt-3'>Log View</a>");
-        out.println("</div></body></html>");
+        out.println("<div class='mt-4'>");
+        out.println("<a href='manage.jsp' class='btn btn-primary me-2'>Back to Admin Panel</a>");
+        out.println("<a href='admindashboard.jsp' class='btn btn-outline-secondary'>Dashboard</a>");
+        out.println("</div></div></body></html>");
         out.close();
     }
 }

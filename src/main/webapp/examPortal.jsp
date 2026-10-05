@@ -64,23 +64,7 @@
         session.setAttribute("examCode", examCode);
       }
 
-      String filePath = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/questions.txt";
-      LinkedHashSet<String> examCodes = new LinkedHashSet<>();
-
-      File file = new File(filePath);
-      if (file.exists()) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-          String line;
-          while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("\\|");
-            if (parts.length >= 12) {
-              examCodes.add(parts[2]);
-            }
-          }
-        } catch (IOException e) {
-          out.println("<p class='text-danger'>Error loading subjects: " + e.getMessage() + "</p>");
-        }
-      }
+      List<String> examCodes = new com.jsp.exam.service.ExamResultService().getExamCodes();
     %>
 
     <div class="mb-3">

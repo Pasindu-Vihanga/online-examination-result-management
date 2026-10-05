@@ -1,35 +1,35 @@
 package com.jsp.exam.service;
 
 import com.jsp.exam.model.AdminLog;
-import com.jsp.exam.service.AdminLogger;
-import java.io.*;
+import com.jsp.exam.util.DBConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Adminservice implements AdminAuthService {
-    private static final String CREDENTIAL_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/admin.txt";
 
     @Override
     public boolean authenticate(AdminLog adminLog) {
         if (!adminLog.isValid()) return false;
 
         boolean success = false;
-        try (BufferedReader reader = new BufferedReader(new FileReader(CREDENTIAL_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 2 &&
-                        parts[0].equals(adminLog.getUsername()) &&
-                        parts[1].equals(adminLog.getPassword())) {
+        String sql = "SELECT id FROM admins WHERE username = ? AND password = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, adminLog.getUsername());
+            ps.setString(2, adminLog.getPassword());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
                     success = true;
-                    break;
                 }
             }
-        } catch (IOException e) {
-            System.err.println("Error reading credentials: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("[Adminservice.authenticate] Error: " + e.getMessage());
         }
 
-        AdminLogger.log("D:/IP/proj/Online-Exam-System/logs/admin_log.txt",
-                adminLog.getUsername(), success ? "Successful login" : "Failed login");
-
+        AdminLogger.log(null, adminLog.getUsername(), success ? "Successful login" : "Failed login");
         return success;
     }
 
@@ -38,33 +38,37 @@ public class Adminservice implements AdminAuthService {
         if (!adminLog.isValid()) return false;
 
         if (usernameExists(adminLog.getUsername())) {
-            return false; // Username already exists
-        }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CREDENTIAL_FILE, true))) {
-            writer.write(adminLog.getUsername() + "," + adminLog.getPassword());
-            writer.newLine();
-            AdminLogger.log("D:/IP/proj/Online-Exam-System/logs/admin_log.txt",
-                    adminLog.getUsername(), "Registration successful");
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error writing credentials: " + e.getMessage());
+            return false;
         }
 
-        return false;
+        String sql = "INSERT INTO admins (username, password) VALUES (?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, adminLog.getUsername());
+            ps.setString(2, adminLog.getPassword());
+            boolean ok = ps.executeUpdate() > 0;
+            if (ok) {
+                AdminLogger.log(null, adminLog.getUsername(), "Registration successful");
+            }
+            return ok;
+        } catch (SQLException e) {
+            System.err.println("[Adminservice.register] Error: " + e.getMessage());
+            AdminLogger.log(null, adminLog.getUsername(), "Registration failed: " + e.getMessage());
+            return false;
+        }
     }
 
     private boolean usernameExists(String username) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(CREDENTIAL_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 1 && parts[0].equals(username)) {
-                    return true;
-                }
+        String sql = "SELECT id FROM admins WHERE username = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
             }
-        } catch (IOException e) {
-            System.err.println("Error reading credentials: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("[Adminservice.usernameExists] Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 }

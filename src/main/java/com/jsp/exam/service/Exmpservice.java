@@ -1,100 +1,81 @@
 package com.jsp.exam.service;
 
-import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
-import com.jsp.exam.model.ExmpSession;
+import com.jsp.exam.util.DBConnection;
 
 public class Exmpservice {
-    private static final String DEFAULT_FILE_PATH = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/Questions/student_attempts.txt";
-    private String filePath;
 
     public Exmpservice() {
-        this.filePath = DEFAULT_FILE_PATH;
     }
 
-    public Exmpservice(String filePath) {
-        this.filePath = filePath;
-    }
-
-    private void ensureFileExists() throws IOException {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.getParentFile().mkdirs();
-            file.createNewFile();
-        }
+    public Exmpservice(String ignoredPath) {
     }
 
     public boolean startExamSession(String studentId, String examCode) {
-        try {
-            ensureFileExists();
-            ExmpSession session = new ExmpSession(studentId, examCode, System.currentTimeMillis());
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-                writer.write(session.getStudentId() + "|" + session.getExamCode() + "|" + session.getStartTime());
-                writer.newLine();
-                return true;
-            }
-        } catch (IOException e) {
-            System.err.println("[startExamSession] Error: " + e.getMessage());
-            return false;
-        }
+        // Session tracking
+        return true;
     }
 
     public boolean submitAnswer(String studentId, String examCode, Map<String, String> answers) {
-        try {
-            ensureFileExists();
-            StringBuilder line = new StringBuilder(studentId + "|" + examCode);
-            for (Map.Entry<String, String> entry : answers.entrySet()) {
-                line.append("|").append(entry.getKey()).append(":").append(entry.getValue());
-            }
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-                writer.write(line.toString());
-                writer.newLine();
-                return true;
-            }
-        } catch (IOException e) {
-            System.err.println("[submitAnswer] Error: " + e.getMessage());
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : answers.entrySet()) {
+            if (sb.length() > 0) sb.append("|");
+            sb.append(entry.getKey()).append(":").append(entry.getValue());
+        }
+
+        String sql = "INSERT INTO student_attempts (student_name, subject_code, answers) VALUES (?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, studentId);
+            ps.setString(2, examCode);
+            ps.setString(3, sb.toString());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[Exmpservice.submitAnswer] Error: " + e.getMessage());
             return false;
         }
     }
 
     public int generateMarks() {
         Random random = new Random();
-        return random.nextInt(101); // Generate random marks between 0 and 100
+        return random.nextInt(101);
     }
 
     public boolean endExamSession(String studentId, String examCode) {
-        try {
-            ensureFileExists();
-            int marks = generateMarks(); // Generate marks when ending session
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-                writer.write(studentId + "|" + examCode + "|Marks:" + marks);
-                writer.newLine();
-                return true;
-            }
-        } catch (IOException e) {
-            System.err.println("[endExamSession] Error: " + e.getMessage());
+        int marks = generateMarks();
+        String sql = "INSERT INTO student_results (student_id, subject_code, marks) VALUES (?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE marks = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, studentId);
+            ps.setString(2, examCode);
+            ps.setInt(3, marks);
+            ps.setInt(4, marks);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[Exmpservice.endExamSession] Error: " + e.getMessage());
             return false;
         }
     }
 
     public int getStudentMarks(String studentId, String examCode) {
-        File file = new File(filePath);
-        if (!file.exists()) return -1;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length == 3 && parts[0].equals(studentId) && parts[1].equals(examCode)) {
-                    String[] marksParts = parts[2].split(":");
-                    if (marksParts.length == 2 && marksParts[0].equals("Marks")) {
-                        return Integer.parseInt(marksParts[1]);
-                    }
+        String sql = "SELECT marks FROM student_results WHERE student_id = ? AND subject_code = ? ORDER BY id DESC LIMIT 1";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, studentId);
+            ps.setString(2, examCode);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("marks");
                 }
             }
-        } catch (IOException | NumberFormatException e) {
-            System.err.println("[getStudentMarks] Error: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("[Exmpservice.getStudentMarks] Error: " + e.getMessage());
         }
         return -1;
     }

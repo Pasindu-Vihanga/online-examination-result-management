@@ -1,83 +1,80 @@
 package com.jsp.exam.service;
 
-import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.jsp.exam.model.Student;
+import com.jsp.exam.util.DBConnection;
 
-public class Studentservice { // Corrected class name (Capitalized 'S')
-    private static final String STUDENT_CRED_FILE = "D:/IP/proj/Examination/Online-Examinations-and-result-management-system/src/main/webapp/logincreds/credentials.txt";
+public class Studentservice {
 
     // Create student
     public boolean addStudent(Student student) {
         if (!student.isValid()) {
             return false;
         }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(STUDENT_CRED_FILE, true))) {
-            writer.write(student.getStudent_name() + "," + student.getStudent_password() + "," + student.getStudent_email());
-            writer.newLine();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+        String sql = "INSERT INTO students (student_name, student_password, student_email) VALUES (?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, student.getStudent_name());
+            ps.setString(2, student.getStudent_password());
+            ps.setString(3, student.getStudent_email());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[Studentservice.addStudent] Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     // Read students
     public List<Student> readStudents() {
-        List<Student> readStudents = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(STUDENT_CRED_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {  // Corrected condition
-                String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    readStudents.add(new Student(parts[0], parts[1], parts[2]));
-                }
+        List<Student> list = new ArrayList<>();
+        String sql = "SELECT student_name, student_password, student_email FROM students ORDER BY id ASC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                list.add(new Student(
+                        rs.getString("student_name"),
+                        rs.getString("student_password"),
+                        rs.getString("student_email")
+                ));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("[Studentservice.readStudents] Error: " + e.getMessage());
         }
-        return readStudents;
+        return list;
     }
 
     // Delete student
     public boolean deleteStudent(String student_name) {
-        List<Student> students = readStudents(); // Retrieve current students
-        boolean deleted = false;
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(STUDENT_CRED_FILE))) {
-            for (Student student : students) {
-                if (!student.getStudent_name().equals(student_name)) {
-                    writer.write(student.getStudent_name() + "," + student.getStudent_password() + "," + student.getStudent_email());
-                    writer.newLine();
-                } else {
-                    deleted = true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        String sql = "DELETE FROM students WHERE student_name = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, student_name);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[Studentservice.deleteStudent] Error: " + e.getMessage());
+            return false;
         }
-        return deleted;
     }
 
     // Modify student
     public boolean updateStudent(String student_name, String student_password, String student_email) {
-        List<Student> students = readStudents();
-        boolean updated = false;
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(STUDENT_CRED_FILE))) {
-            for (Student student : students) {
-                if (student.getStudent_name().equals(student_name)) {
-                    student = new Student(student_name, student_password, student_email); // Update student details
-                    updated = true;
-                }
-                writer.write(student.getStudent_name() + "," + student.getStudent_password() + "," + student.getStudent_email());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        String sql = "UPDATE students SET student_password = ?, student_email = ? WHERE student_name = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, student_password);
+            ps.setString(2, student_email);
+            ps.setString(3, student_name);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[Studentservice.updateStudent] Error: " + e.getMessage());
+            return false;
         }
-        return updated;
     }
 }
