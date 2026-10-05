@@ -2,9 +2,9 @@ package com.jsp.exam.action;
 
 import com.jsp.exam.model.feedbackmodel;
 import com.jsp.exam.service.feedbackservice;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 
 import java.io.IOException;
 

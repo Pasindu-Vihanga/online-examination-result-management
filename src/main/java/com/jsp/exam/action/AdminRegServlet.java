@@ -3,9 +3,9 @@ package com.jsp.exam.action;
 import com.jsp.exam.model.AdminLog;
 import com.jsp.exam.service.AdminLogger;
 import com.jsp.exam.service.Adminservice;
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 
 import java.io.IOException;
 
