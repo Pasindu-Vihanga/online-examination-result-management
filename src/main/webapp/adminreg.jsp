@@ -1,139 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Register</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register New Admin - Security Console</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom Theme -->
+    <link href="css/modern-theme.css" rel="stylesheet">
     <style>
         body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #00b4d8, #0077b6);
-            height: 100vh;
+            background-color: #0b0f19;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            color: #f1f5f9;
         }
-
-        .register-container {
-            background: rgba(255, 255, 255, 0.15);
+        .admin-card {
+            background: #111827;
+            border: 1px solid #1f2937;
             border-radius: 20px;
-            padding: 40px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            max-width: 440px;
             width: 100%;
-            max-width: 450px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
-            color: white;
-            text-align: center;
+            padding: 2.5rem;
         }
-
-        .register-container img {
-            width: 90px;
-            height: 90px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            border: 3px solid white;
+        .admin-input {
+            background-color: #1f2937 !important;
+            border-color: #374151 !important;
+            color: #f9fafb !important;
         }
-
-        .form-group {
-            position: relative;
-            margin-bottom: 25px;
+        .admin-input:focus {
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
         }
-
-        .form-control {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid white;
-            border-radius: 0;
-            color: white;
-            padding-left: 38px;
-            transition: all 0.3s ease;
-        }
-
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .form-control:focus {
-            background: white;
-            color: #000;
-            border-bottom: 2px solid #0077b6;
-            outline: none;
-        }
-
-        .form-control:focus::placeholder {
-            color: #666;
-        }
-
-        .form-group i {
-            position: absolute;
-            top: 9px;
-            left: 10px;
-            color: white;
-        }
-
-        .btn-register {
-            width: 100%;
-            padding: 12px;
-            border-radius: 25px;
-            border: 1px solid white;
-            color: white;
-            background: transparent;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .btn-register:hover {
-            background-color: white;
-            color: #0077b6;
-        }
-
-        .bottom-text {
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-
-        .bottom-text a {
-            color: white;
-            text-decoration: underline;
-        }
-
-        .bottom-text a:hover {
-            color: #d9f2ff;
+        .admin-input::placeholder {
+            color: #6b7280;
         }
     </style>
 </head>
 <body>
-<div class="register-container">
-    <h3 class="mb-4">Create Account</h3>
-    <form action="registerAD" method="post">
-        <div class="form-group">
-            <i class="bi bi-person-fill"></i>
-            <input type="text" class="form-control" name="username" placeholder="User Name" required />
+
+<!-- Minimal Header -->
+<nav class="navbar py-3">
+    <div class="container">
+        <a class="navbar-brand text-white fw-bold d-flex align-items-center gap-2" href="index.jsp">
+            <div class="brand-icon-box" style="background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);">
+                <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <span>AdminConsole</span>
+        </a>
+        <a href="adminlogin.jsp" class="btn btn-outline-light btn-sm rounded-pill px-3">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Admin Login
+        </a>
+    </div>
+</nav>
+
+<div class="container d-flex align-items-center justify-content-center flex-grow-1 my-4">
+    <div class="admin-card animate-fade-in">
+        <div class="text-center mb-4">
+            <div class="d-inline-flex p-3 rounded-circle mb-3" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">
+                <i class="bi bi-person-badge-fill fs-1"></i>
+            </div>
+            <h3 class="fw-bold text-white mb-1">Create Admin Account</h3>
+            <p class="text-muted small">Provision new administrative user privileges</p>
         </div>
-        <div class="form-group">
-            <i class="bi bi-lock-fill"></i>
-            <input type="password" class="form-control" name="password" placeholder="Password" required />
+
+        <%-- Alerts --%>
+        <% if ("exists".equals(request.getParameter("error"))) { %>
+        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center gap-2 py-2" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+            <div class="small">Admin username already exists. Please choose another.</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-        <div class="form-group">
-            <i class="bi bi-lock-fill"></i>
-            <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required />
+        <% } else if ("mismatch".equals(request.getParameter("error"))) { %>
+        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center gap-2 py-2" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+            <div class="small">Passwords do not match. Please re-enter carefully.</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-        <div class="form-group">
-            <i class="bi bi-envelope-fill"></i>
-            <input type="email" class="form-control" name="email" placeholder="Email Address" required />
+        <% } else if ("empty".equals(request.getParameter("error"))) { %>
+        <div class="alert alert-warning alert-dismissible fade show d-flex align-items-center gap-2 py-2" role="alert">
+            <i class="bi bi-exclamation-circle-fill fs-5"></i>
+            <div class="small">Please fill in all administrative fields.</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-        <button type="submit" class="btn btn-register">Register</button>
-    </form>
-    <div class="bottom-text">
-        Already have an account? <a href="adminlogin.jsp">Login here</a>
+        <% } %>
+
+        <form action="registerAD" method="POST" class="mt-3">
+            <div class="mb-3">
+                <label for="username" class="form-label small fw-semibold text-light mb-1">Admin Username</label>
+                <div class="input-icon-group">
+                    <i class="bi bi-person input-icon text-muted"></i>
+                    <input type="text" class="form-control form-control-modern admin-input" id="username" name="username" 
+                           placeholder="Choose an admin username" required autocomplete="username">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label small fw-semibold text-light mb-1">Password</label>
+                <div class="input-icon-group">
+                    <i class="bi bi-key input-icon text-muted"></i>
+                    <input type="password" class="form-control form-control-modern admin-input" id="password" name="password" 
+                           placeholder="Create password" required autocomplete="new-password">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="confirm_password" class="form-label small fw-semibold text-light mb-1">Confirm Password</label>
+                <div class="input-icon-group">
+                    <i class="bi bi-shield-check input-icon text-muted"></i>
+                    <input type="password" class="form-control form-control-modern admin-input" id="confirm_password" name="confirm_password" 
+                           placeholder="Re-enter password" required autocomplete="new-password">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-modern-primary w-100 py-2 justify-content-center">
+                <i class="bi bi-person-check"></i> Register Administrator
+            </button>
+        </form>
+
+        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-center">
+            <p class="text-muted small mb-0">Already an administrator? <a href="adminlogin.jsp" class="text-primary text-decoration-none fw-semibold">Sign In Here</a></p>
+        </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="text-center py-3 text-muted small border-top border-secondary border-opacity-10">
+    &copy; 2026 Online Examination Management System &bull; Secure Administrative Console
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

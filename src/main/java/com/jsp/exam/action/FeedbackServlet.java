@@ -32,18 +32,16 @@ public class FeedbackServlet extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String message = request.getParameter("message");
-        String rating = request.getParameter("rating"); // ✅ Get rating from form
+        String rating = request.getParameter("rating");
 
-        feedbackmodel feedback = new feedbackmodel(name, email, message, rating); // ✅ Include rating
+        feedbackmodel feedback = new feedbackmodel(name, email, message, rating);
 
         if (feedback.isValid()) {
             feedbackService.createFeedback(feedback);
-            request.setAttribute("successMessage", "Your feedback has been submitted successfully!");
+            response.sendRedirect("feedback.jsp?submitted=true");
         } else {
-            request.setAttribute("error", "Please fill in all required fields.");
+            response.sendRedirect("feedback.jsp?error=invalid");
         }
-
-        response.sendRedirect("feedback.jsp");
     }
 
     private void handleDelete(HttpServletRequest request, HttpServletResponse response)
@@ -51,14 +49,9 @@ public class FeedbackServlet extends HttpServlet {
         String name = request.getParameter("name");
 
         if (name != null && !name.trim().isEmpty()) {
-            boolean deleted = feedbackService.removeFeedback(name);
-            if (deleted) {
-                System.out.println("Feedback deleted for: " + name);
-            } else {
-                System.out.println("Failed to delete feedback for: " + name);
-            }
+            feedbackService.removeFeedback(name);
         }
 
-        response.sendRedirect("feedbackrecords.jsp");
+        response.sendRedirect("feedbackrecords.jsp?deleted=true");
     }
 }

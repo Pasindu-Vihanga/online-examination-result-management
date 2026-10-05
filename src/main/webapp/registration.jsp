@@ -3,64 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Examination & Result Management - Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(120deg, #00B4DB, #0083B0); /* Gradient background */
-        }
-        .form-container {
-            max-width: 420px;
-            margin: 60px auto;
-            padding: 30px;
-            background-color: #ffffff; /* White form background */
-            border-radius: 16px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Shadow for card */
-        }
-        .form-container h2 {
-            color: #004d40; /* Teal heading */
-            font-weight: bold;
-        }
-        .btn-primary, .btn-secondary {
-            padding: 10px 20px;
-        }
-        .footer {
-            background-color: #004d40;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-    </style>
+    <title>Student Registration - Online Examination Portal</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom Theme -->
+    <link href="css/modern-theme.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-mesh">
 
-<section id="register" class="container py-5">
-    <div class="form-container">
-        <h2 class="text-center mb-4">Registration Portal</h2>
+<!-- Simple Topbar -->
+<nav class="navbar navbar-expand-lg navbar-modern">
+    <div class="container">
+        <a class="navbar-brand" href="index.jsp">
+            <div class="brand-icon-box">
+                <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <span>ExamHub<span style="color: var(--primary);">.io</span></span>
+        </a>
+        <div class="d-flex align-items-center gap-2">
+            <a href="index.jsp" class="btn btn-modern-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</nav>
 
-        <form action="register" method="post">
-            <div class="mb-3">
-                <label for="name" class="form-label">Enter Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+<div class="auth-wrapper">
+    <div class="auth-card animate-fade-in">
+        <div class="text-center mb-4">
+            <div class="brand-icon-box mx-auto mb-3" style="width: 50px; height: 50px; font-size: 1.4rem;">
+                <i class="bi bi-person-plus-fill"></i>
             </div>
+            <h3 class="fw-bold text-dark mb-1">Create Student Account</h3>
+            <p class="text-muted small">Register to participate in online evaluations</p>
+        </div>
+
+        <%-- Alerts --%>
+        <% if ("failed".equals(request.getParameter("error"))) { %>
+        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center gap-2 py-2" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+            <div class="small">Registration failed. Username may already exist or inputs are invalid.</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <% } else if ("empty".equals(request.getParameter("error"))) { %>
+        <div class="alert alert-warning alert-dismissible fade show d-flex align-items-center gap-2 py-2" role="alert">
+            <i class="bi bi-exclamation-circle-fill fs-5"></i>
+            <div class="small">Please fill in all registration fields.</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <% } %>
+
+        <form action="register" method="POST" class="mt-3">
             <div class="mb-3">
-                <label for="password" class="form-label">Create Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
+                <label for="name" class="form-label-modern">Full Name / Student ID</label>
+                <div class="input-icon-group">
+                    <i class="bi bi-person input-icon"></i>
+                    <input type="text" class="form-control form-control-modern" id="name" name="name" 
+                           placeholder="e.g. John Doe or IT21004" required autocomplete="name">
+                </div>
             </div>
+
             <div class="mb-3">
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required>
+                <label for="email" class="form-label-modern">Email Address</label>
+                <div class="input-icon-group">
+                    <i class="bi bi-envelope input-icon"></i>
+                    <input type="email" class="form-control form-control-modern" id="email" name="email" 
+                           placeholder="student@example.com" required autocomplete="email">
+                </div>
             </div>
-            <!-- Correctly spaced and aligned buttons -->
-            <div class="d-grid gap-3">
-                <button type="submit" class="btn btn-primary">Register</button>
-                <a href="index.jsp" class="btn btn-secondary">Back to Main</a>
+
+            <div class="mb-4">
+                <label for="password" class="form-label-modern">Create Password</label>
+                <div class="input-icon-group">
+                    <i class="bi bi-key input-icon"></i>
+                    <input type="password" class="form-control form-control-modern" id="password" name="password" 
+                           placeholder="Create a secure password" required autocomplete="new-password">
+                    <button type="button" class="password-toggle" id="togglePasswordBtn" title="Toggle password visibility">
+                        <i class="bi bi-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-modern-primary py-2 justify-content-center">
+                    <i class="bi bi-check2-circle"></i> Complete Registration
+                </button>
             </div>
         </form>
-    </div>
-</section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="mt-4 pt-3 border-top text-center">
+            <p class="text-muted small mb-0">Already registered? <a href="login.jsp" class="fw-semibold text-primary text-decoration-none">Sign In Here</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggleIcon');
+
+    if (toggleBtn && passwordInput) {
+        toggleBtn.addEventListener('click', () => {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            toggleIcon.className = isPassword ? 'bi bi-eye-slash' : 'bi bi-eye';
+        });
+    }
+</script>
 </body>
 </html>
